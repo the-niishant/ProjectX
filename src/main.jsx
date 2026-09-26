@@ -2,6 +2,7 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StoreProvider } from "./context/StoreContext";
+import { LenisProvider } from "./components/LenisProvider";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { CartDrawer } from "./components/CartDrawer";
@@ -31,36 +32,38 @@ function App() {
   return (
     <BrowserRouter>
       <StoreProvider>
-        <ScrollToTop />
-        <div className="site-app-wrapper">
-          <Header />
-          <main className="main-content-flow">
-            <AppErrorBoundary>
-              <PageTransition>
-                <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/collections" element={<Collections />} />
-                <Route path="/collections/:slug" element={<CollectionDetail />} />
-                <Route path="/products/:slug" element={<ProductDetail />} />
-                <Route path="/wishlist" element={<WishlistPage />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/checkout" element={<CheckoutPage />} />
-                <Route path="/heritage" element={<HeritagePage />} />
-                <Route path="/journal" element={<JournalPage />} />
-                <Route path="/journal/:slug" element={<ArticlePage />} />
-                <Route path="*" element={<NotFoundPage />} />
-                </Routes>
-              </PageTransition>
-            </AppErrorBoundary>
-          </main>
-          <Footer />
+        <LenisProvider>
+          <ScrollToTop />
+          <div className="site-app-wrapper">
+            <Header />
+            <main className="main-content-flow">
+              <AppErrorBoundary>
+                <PageTransition>
+                  <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/collections" element={<Collections />} />
+                  <Route path="/collections/:slug" element={<CollectionDetail />} />
+                  <Route path="/products/:slug" element={<ProductDetail />} />
+                  <Route path="/wishlist" element={<WishlistPage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/heritage" element={<HeritagePage />} />
+                  <Route path="/journal" element={<JournalPage />} />
+                  <Route path="/journal/:slug" element={<ArticlePage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                  </Routes>
+                </PageTransition>
+              </AppErrorBoundary>
+            </main>
+            <Footer />
 
-          {/* Global Flyouts and Overlays */}
-          <CartDrawer />
-          <SearchModal />
-          <QuickViewModal />
-          <Toast />
-        </div>
+            {/* Global Flyouts and Overlays */}
+            <CartDrawer />
+            <SearchModal />
+            <QuickViewModal />
+            <Toast />
+          </div>
+        </LenisProvider>
       </StoreProvider>
     </BrowserRouter>
   );
