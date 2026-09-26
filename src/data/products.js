@@ -1,10 +1,10 @@
 const textileGallery = (id, primary, alternate) => [
   primary,
   alternate,
-  `https://picsum.photos/seed/elite-weavers-${id}-drape/900/1200`,
-  `https://picsum.photos/seed/elite-weavers-${id}-detail/900/1200`,
-  `https://picsum.photos/seed/elite-weavers-${id}-loom/900/1200`,
-  `https://picsum.photos/seed/elite-weavers-${id}-texture/900/1200`
+  `/products/${id}-drape.svg`,
+  `/products/${id}-detail.svg`,
+  `/products/${id}-loom.svg`,
+  `/products/${id}-texture.svg`
 ];
 
 export const products = [

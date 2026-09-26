@@ -152,7 +152,7 @@ export function Home() {
 
         <img
           className="hero-bg-media"
-          src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1920&q=90"
+          src="/products/10-drape.svg"
           alt="Woman draped in a deep crimson Banarasi silk saree"
         />
         <div className="hero-gradient-overlay"></div>
