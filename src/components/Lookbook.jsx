@@ -39,7 +39,7 @@ const lookbookItems = [
     title: "The Regal Paithani",
     collection: "The Celebration Edit · Yeola",
     caption: "Rose filature silk crowned by an interlocking tapestry peacock pallu in jewel tones.",
-    image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1200&q=85",
     productLink: "/products/gul-paithani",
     productName: "Gul Paithani"
   },
@@ -48,7 +48,7 @@ const lookbookItems = [
     title: "The Solar Saffron",
     collection: "Modern Heirlooms · Chanderi",
     caption: "Fine crisp organza with micro metallic selvedge creating an architectural silhouette.",
-    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85",
     productLink: "/products/malhar-organza",
     productName: "Malhar Organza"
   }
