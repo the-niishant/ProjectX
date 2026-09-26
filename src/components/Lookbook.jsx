@@ -30,7 +30,7 @@ const lookbookItems = [
     title: "The Gossamer Veil",
     collection: "Barely There · Pranpur",
     caption: "Ivory un-degummed silk warp yielding a translucent, breathless fall for warm ceremonies.",
-    image: "https://images.unsplash.com/photo-1616091216791-a5360b5fc78a?auto=format&fit=crop&w=1200&q=85",
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=1200&q=85",
     productLink: "/products/mogra-chanderi",
     productName: "Mogra Chanderi"
   },
