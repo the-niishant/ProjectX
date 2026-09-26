@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "../context/StoreContext";
+import { trackEvent } from "../utils/analytics";
 
 export function CartPage() {
   const {
@@ -186,7 +187,10 @@ export function CartPage() {
 
               <button
                 className="primary-button checkout-btn-full"
-                onClick={() => navigate("/checkout")}
+                onClick={() => {
+                  trackEvent("begin_checkout", { source: "cart_page", itemCount: bag.length, total: bagTotal });
+                  navigate("/checkout");
+                }}
               >
                 Continue to checkout <span>↗</span>
               </button>

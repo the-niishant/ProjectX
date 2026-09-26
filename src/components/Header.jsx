@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useStore } from "../context/StoreContext";
+import { trackEvent } from "../utils/analytics";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -65,7 +66,10 @@ export function Header() {
         <div className="header-actions">
           <button
             className="action-btn search-trigger"
-            onClick={() => setIsSearchOpen(true)}
+            onClick={() => {
+              setIsSearchOpen(true);
+              trackEvent("open_search");
+            }}
             aria-label="Search collection"
           >
             <span className="action-text">Search</span>
@@ -90,7 +94,10 @@ export function Header() {
 
           <button
             className="action-btn bag-trigger"
-            onClick={() => setIsCartOpen(true)}
+            onClick={() => {
+              setIsCartOpen(true);
+              trackEvent("open_cart");
+            }}
             aria-label={`Shopping bag, ${bagItemCount} items`}
           >
             <span className="action-text">Bag</span>

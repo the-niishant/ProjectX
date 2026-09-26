@@ -9,6 +9,7 @@ import { SearchModal } from "./components/SearchModal";
 import { QuickViewModal } from "./components/QuickViewModal";
 import { Toast } from "./components/Toast";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { AppErrorBoundary } from "./components/AppErrorBoundary";
 
 // Pages
 import { Home } from "./pages/Home";
@@ -33,19 +34,21 @@ function App() {
         <div className="site-app-wrapper">
           <Header />
           <main className="main-content-flow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/collections" element={<Collections />} />
-              <Route path="/collections/:slug" element={<CollectionDetail />} />
-              <Route path="/products/:slug" element={<ProductDetail />} />
-              <Route path="/wishlist" element={<WishlistPage />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/checkout" element={<CheckoutPage />} />
-              <Route path="/heritage" element={<HeritagePage />} />
-              <Route path="/journal" element={<JournalPage />} />
-              <Route path="/journal/:slug" element={<ArticlePage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <AppErrorBoundary>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/collections" element={<Collections />} />
+                <Route path="/collections/:slug" element={<CollectionDetail />} />
+                <Route path="/products/:slug" element={<ProductDetail />} />
+                <Route path="/wishlist" element={<WishlistPage />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
+                <Route path="/heritage" element={<HeritagePage />} />
+                <Route path="/journal" element={<JournalPage />} />
+                <Route path="/journal/:slug" element={<ArticlePage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </AppErrorBoundary>
           </main>
           <Footer />
 

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { products } from "../data/products";
+import { trackEvent } from "../utils/analytics";
 
 const StoreContext = createContext(null);
 
@@ -76,6 +77,7 @@ export function StoreProvider({ children }) {
       return [...prevBag, { product, quantity }];
     });
     showToast(`${product.name} added to your bag`);
+    trackEvent("add_to_cart", { productId: product.id, productName: product.name, quantity });
   };
 
   const updateQuantity = (productId, newQuantity) => {
@@ -95,6 +97,7 @@ export function StoreProvider({ children }) {
       const removed = prevBag.find((i) => i.product.id === productId);
       if (removed) {
         showToast(`${removed.product.name} removed from bag`);
+        trackEvent("remove_from_cart", { productId, productName: removed.product.name });
       }
       return prevBag.filter((item) => item.product.id !== productId);
     });
@@ -112,9 +115,11 @@ export function StoreProvider({ children }) {
     setWishlist((prevWishlist) => {
       if (prevWishlist.includes(productId)) {
         showToast(`${product ? product.name : "Piece"} removed from your wishlist`);
+        trackEvent("remove_from_wishlist", { productId });
         return prevWishlist.filter((id) => id !== productId);
       } else {
         showToast(`${product ? product.name : "Piece"} saved to your wishlist`);
+        trackEvent("add_to_wishlist", { productId });
         return [...prevWishlist, productId];
       }
     });
@@ -146,11 +151,13 @@ export function StoreProvider({ children }) {
       setPromoCode(clean);
       setDiscountPercent(10);
       showToast("Promo code applied: 10% savings unlocked");
+      trackEvent("apply_promo", { code: clean, discountPercent: 10 });
       return true;
     } else if (clean === "FESTIVE15") {
       setPromoCode(clean);
       setDiscountPercent(15);
       showToast("Promo code applied: 15% festive savings unlocked");
+      trackEvent("apply_promo", { code: clean, discountPercent: 15 });
       return true;
     } else {
       showToast("That code could not be applied. Check the code and try again.");

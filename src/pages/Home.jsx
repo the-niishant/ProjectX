@@ -7,6 +7,7 @@ import { collections } from "../data/collections";
 import { journalArticles } from "../data/journal";
 import { ProductCard } from "../components/ProductCard";
 import { useStore } from "../context/StoreContext";
+import { trackEvent } from "../utils/analytics";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +21,7 @@ export function Home() {
 
   useEffect(() => {
     const timer = setTimeout(() => setReady(true), 600);
+    trackEvent("view_home");
     return () => clearTimeout(timer);
   }, []);
 
@@ -121,6 +123,7 @@ export function Home() {
       return;
     }
     showToast("Thank you. You are on the list.");
+    trackEvent("newsletter_signup", { source: "home" });
     setNewsletterEmail("");
   };
 
@@ -288,7 +291,10 @@ export function Home() {
                   role="tab"
                   aria-selected={selectedCraft === cat}
                   className={`craft-tab-btn ${selectedCraft === cat ? "is-active" : ""}`}
-                  onClick={() => setSelectedCraft(cat)}
+                  onClick={() => {
+                    setSelectedCraft(cat);
+                    trackEvent("filter_collection", { filterType: "craft", value: cat, source: "home" });
+                  }}
                 >
                   {cat}
                 </button>

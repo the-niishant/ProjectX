@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../context/StoreContext";
+import { trackEvent } from "../utils/analytics";
 
 export function ProductCard({ product }) {
   const { isWished, toggleWish, addToBag, setQuickViewProduct, money } = useStore();
@@ -33,7 +34,10 @@ export function ProductCard({ product }) {
 
         <button
           className="quick-view-overlay-btn"
-          onClick={() => setQuickViewProduct(product)}
+          onClick={() => {
+            setQuickViewProduct(product);
+            trackEvent("view_product", { productId: product.id, productName: product.name, source: "quick_view" });
+          }}
           aria-label={`Quick view ${product.name}`}
         >
           View piece

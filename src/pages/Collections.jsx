@@ -3,6 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { products, allCategories, allFabrics, allOccasions, allColors, priceRanges } from "../data/products";
 import { collections } from "../data/collections";
 import { ProductCard } from "../components/ProductCard";
+import { trackEvent } from "../utils/analytics";
 
 export function Collections() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,6 +20,13 @@ export function Collections() {
   const [sortOrder, setSortOrder] = useState("curated");
   const [searchQuery, setSearchQuery] = useState(paramSearch);
   const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = window.setTimeout(() => setIsLoading(false), 220);
+    return () => window.clearTimeout(timer);
+  }, [selectedCraft, selectedFabric, selectedOccasion, selectedColor, selectedPriceLabel, searchQuery, sortOrder]);
 
   // Sync state if URL searchParams change
   useEffect(() => {
@@ -195,7 +203,10 @@ export function Collections() {
                 <button
                   key={craft}
                   className={`filter-option-btn ${selectedCraft === craft ? "is-selected" : ""}`}
-                  onClick={() => setSelectedCraft(craft)}
+                  onClick={() => {
+                    setSelectedCraft(craft);
+                    trackEvent("filter_collection", { filterType: "craft", value: craft });
+                  }}
                 >
                   <span>{craft}</span>
                   <span className="option-check">{selectedCraft === craft ? "✓" : ""}</span>
@@ -212,7 +223,10 @@ export function Collections() {
                 <button
                   key={fabric}
                   className={`filter-option-btn ${selectedFabric === fabric ? "is-selected" : ""}`}
-                  onClick={() => setSelectedFabric(fabric)}
+                  onClick={() => {
+                    setSelectedFabric(fabric);
+                    trackEvent("filter_collection", { filterType: "fabric", value: fabric });
+                  }}
                 >
                   <span>{fabric}</span>
                   <span className="option-check">{selectedFabric === fabric ? "✓" : ""}</span>
@@ -229,7 +243,10 @@ export function Collections() {
                 <button
                   key={occasion}
                   className={`filter-option-btn ${selectedOccasion === occasion ? "is-selected" : ""}`}
-                  onClick={() => setSelectedOccasion(occasion)}
+                  onClick={() => {
+                    setSelectedOccasion(occasion);
+                    trackEvent("filter_collection", { filterType: "occasion", value: occasion });
+                  }}
                 >
                   <span>{occasion}</span>
                   <span className="option-check">{selectedOccasion === occasion ? "✓" : ""}</span>
@@ -246,7 +263,10 @@ export function Collections() {
                 <button
                   key={color}
                   className={`filter-option-btn ${selectedColor === color ? "is-selected" : ""}`}
-                  onClick={() => setSelectedColor(color)}
+                  onClick={() => {
+                    setSelectedColor(color);
+                    trackEvent("filter_collection", { filterType: "color", value: color });
+                  }}
                 >
                   <span>{color}</span>
                   <span className="option-check">{selectedColor === color ? "✓" : ""}</span>
@@ -263,7 +283,10 @@ export function Collections() {
                 <button
                   key={range.label}
                   className={`filter-option-btn ${selectedPriceLabel === range.label ? "is-selected" : ""}`}
-                  onClick={() => setSelectedPriceLabel(range.label)}
+                  onClick={() => {
+                    setSelectedPriceLabel(range.label);
+                    trackEvent("filter_collection", { filterType: "price", value: range.label });
+                  }}
                 >
                   <span>{range.label}</span>
                   <span className="option-check">{selectedPriceLabel === range.label ? "✓" : ""}</span>
@@ -341,7 +364,11 @@ export function Collections() {
             </label>
           </div>
 
-          {filteredProducts.length > 0 ? (
+          {isLoading ? (
+            <div className="catalog-products-grid catalog-products-skeleton" aria-label="Loading the edit">
+              {Array.from({ length: 6 }, (_, index) => <div className="product-skeleton" key={index}><span /><span /><span /></div>)}
+            </div>
+          ) : filteredProducts.length > 0 ? (
             <div className="catalog-products-grid">
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} />

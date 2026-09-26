@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useStore } from "../context/StoreContext";
+import { trackEvent } from "../utils/analytics";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,7 @@ export function Footer() {
       return;
     }
     showToast("Thank you. You are on the list.");
+    trackEvent("newsletter_signup", { source: "footer" });
     setEmail("");
   };
 

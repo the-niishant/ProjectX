@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "../context/StoreContext";
 import { products } from "../data/products";
+import { trackEvent } from "../utils/analytics";
 
 export function SearchModal() {
   const { isSearchOpen, setIsSearchOpen, searchQuery, setSearchQuery, money } = useStore();
@@ -36,6 +37,7 @@ export function SearchModal() {
 
   const handleSelectProduct = (slug) => {
     setIsSearchOpen(false);
+    trackEvent("view_product", { slug, source: "search" });
     navigate(`/products/${slug}`);
   };
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useStore } from "../context/StoreContext";
+import { trackEvent } from "../utils/analytics";
 
 export function CartDrawer() {
   const {
@@ -49,6 +50,7 @@ export function CartDrawer() {
 
   const handleCheckoutClick = () => {
     setIsCartOpen(false);
+    trackEvent("begin_checkout", { source: "cart_drawer", itemCount: bag.length, total: bagTotal });
     navigate("/checkout");
   };
 

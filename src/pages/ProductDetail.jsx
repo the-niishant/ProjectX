@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { products } from "../data/products";
 import { useStore } from "../context/StoreContext";
+import { trackEvent } from "../utils/analytics";
 import { ProductCard } from "../components/ProductCard";
 
 export function ProductDetail() {
@@ -21,6 +22,7 @@ export function ProductDetail() {
     setQuantity(1);
     setOpenAccordion("details");
     setZoomActive(false);
+    if (product) trackEvent("view_product", { productId: product.id, productName: product.name, source: "detail" });
   }, [slug]);
 
   if (!product) {
@@ -40,6 +42,7 @@ export function ProductDetail() {
 
   const handleBuyNow = () => {
     addToBag(product, quantity);
+    trackEvent("begin_checkout", { productId: product.id, quantity, source: "buy_now" });
     navigate("/checkout");
   };
 
