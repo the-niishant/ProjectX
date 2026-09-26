@@ -61,6 +61,7 @@ export function SareeHero() {
       // Give the editorial saree a slow fabric-like drift while it rests in view.
       const floatingSaree = mediaRef.current?.querySelector(".hero-primary-photo");
       const floatingSilk = mediaRef.current?.querySelector(".hero-floating-silk");
+      const floatingSilkSecondary = mediaRef.current?.querySelector(".hero-floating-silk-secondary");
       if (!prefersReducedMotion && floatingSaree) {
         gsap.to(floatingSaree, {
           x: 8,
@@ -84,6 +85,19 @@ export function SareeHero() {
           yoyo: true,
           ease: "sine.inOut",
           delay: 0.4
+        });
+      }
+      if (!prefersReducedMotion && floatingSilkSecondary) {
+        gsap.to(floatingSilkSecondary, {
+          x: 22,
+          y: -10,
+          rotation: 1.6,
+          scale: 1.035,
+          duration: 8.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: 1.2
         });
       }
 
@@ -152,6 +166,14 @@ export function SareeHero() {
                 src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=82"
                 alt=""
                 className="hero-floating-silk"
+                loading="eager"
+                aria-hidden="true"
+                referrerPolicy="no-referrer"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1000&q=80"
+                alt=""
+                className="hero-floating-silk-secondary"
                 loading="eager"
                 aria-hidden="true"
                 referrerPolicy="no-referrer"

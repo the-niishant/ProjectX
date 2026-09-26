@@ -48,7 +48,7 @@ const occasionsData = [
     kicker: "TOKEN OF REVERENCE",
     tagline: "A gift that speaks of thoughtfulness.",
     description: "Packaged in hand-crafted muslin bags and gift boxes.",
-    image: "https://images.unsplash.com/photo-1616091216791-a5360b5fc78a?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=900&q=85",
     link: "/collections?search=Gift",
     isLarge: false,
   },

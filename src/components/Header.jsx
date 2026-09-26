@@ -146,60 +146,60 @@ export function Header() {
             {bagItemCount > 0 && <sup className="badge">{bagItemCount}</sup>}
           </button>
         </div>
+      </header>
 
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="mobile-nav-overlay" onClick={closeMobileMenu}>
-            <div className="mobile-nav-panel" onClick={(e) => e.stopPropagation()}>
-              <div className="mobile-nav-head">
-                <span className="mobile-nav-title">Navigation</span>
-                <button className="mobile-nav-close" onClick={closeMobileMenu} aria-label="Close menu">
-                  ✕
-                </button>
-              </div>
-              <nav className="mobile-nav-links">
-                <Link to="/collections?filter=New" onClick={closeMobileMenu}>
-                  New In <span>↗</span>
-                </Link>
-                <Link to="/collections" onClick={closeMobileMenu}>
-                  All Sarees <span>↗</span>
-                </Link>
-                <a
-                  href="#occasions"
-                  onClick={() => {
-                    closeMobileMenu();
-                    document.getElementById("occasions")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                >
-                  Shop by Occasion <span>↗</span>
-                </a>
-                <Link to="/heritage" onClick={closeMobileMenu}>
-                  The Craft & Weavers <span>↗</span>
-                </Link>
-                <Link to="/journal" onClick={closeMobileMenu}>
-                  Editorial Journal <span>↗</span>
-                </Link>
-                <Link to="/wishlist" onClick={closeMobileMenu}>
-                  Wishlist ({wishlist.length}) <span>↗</span>
-                </Link>
-                <button
-                  className="mobile-cart-btn"
-                  onClick={() => {
-                    closeMobileMenu();
-                    setIsCartOpen(true);
-                  }}
-                >
-                  Shopping Bag ({bagItemCount}) <span>↗</span>
-                </button>
-              </nav>
-              <div className="mobile-nav-footer">
-                <p>Pure Handloom Silks · Woven slowly in Varanasi & Kanchipuram</p>
-                <small>Complimentary insured delivery across India</small>
-              </div>
+      {/* Mobile Navigation Drawer */}
+      {mobileMenuOpen && (
+        <div className="mobile-nav-overlay" onClick={closeMobileMenu}>
+          <div className="mobile-nav-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-nav-head">
+              <span className="mobile-nav-title">Navigation</span>
+              <button className="mobile-nav-close" onClick={closeMobileMenu} aria-label="Close menu">
+                ✕
+              </button>
+            </div>
+            <nav className="mobile-nav-links">
+              <Link to="/collections?filter=New" onClick={closeMobileMenu}>
+                New In <span>↗</span>
+              </Link>
+              <Link to="/collections" onClick={closeMobileMenu}>
+                All Sarees <span>↗</span>
+              </Link>
+              <a
+                href="#occasions"
+                onClick={() => {
+                  closeMobileMenu();
+                  document.getElementById("occasions")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Shop by Occasion <span>↗</span>
+              </a>
+              <Link to="/heritage" onClick={closeMobileMenu}>
+                The Craft & Weavers <span>↗</span>
+              </Link>
+              <Link to="/journal" onClick={closeMobileMenu}>
+                Editorial Journal <span>↗</span>
+              </Link>
+              <Link to="/wishlist" onClick={closeMobileMenu}>
+                Wishlist ({wishlist.length}) <span>↗</span>
+              </Link>
+              <button
+                className="mobile-cart-btn"
+                onClick={() => {
+                  closeMobileMenu();
+                  setIsCartOpen(true);
+                }}
+              >
+                Shopping Bag ({bagItemCount}) <span>↗</span>
+              </button>
+            </nav>
+            <div className="mobile-nav-footer">
+              <p>Pure Handloom Silks · Woven slowly in Varanasi & Kanchipuram</p>
+              <small>Complimentary insured delivery across India</small>
             </div>
           </div>
-        )}
-      </header>
+        </div>
+      )}
     </>
   );
 }
