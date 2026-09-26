@@ -10,6 +10,7 @@ import { QuickViewModal } from "./components/QuickViewModal";
 import { Toast } from "./components/Toast";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { AppErrorBoundary } from "./components/AppErrorBoundary";
+import { PageTransition } from "./components/PageTransition";
 
 // Pages
 import { Home } from "./pages/Home";
@@ -35,7 +36,8 @@ function App() {
           <Header />
           <main className="main-content-flow">
             <AppErrorBoundary>
-              <Routes>
+              <PageTransition>
+                <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/collections" element={<Collections />} />
                 <Route path="/collections/:slug" element={<CollectionDetail />} />
@@ -47,7 +49,8 @@ function App() {
                 <Route path="/journal" element={<JournalPage />} />
                 <Route path="/journal/:slug" element={<ArticlePage />} />
                 <Route path="*" element={<NotFoundPage />} />
-              </Routes>
+                </Routes>
+              </PageTransition>
             </AppErrorBoundary>
           </main>
           <Footer />

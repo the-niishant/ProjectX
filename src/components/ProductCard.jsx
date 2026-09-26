@@ -13,6 +13,7 @@ export function ProductCard({ product }) {
   return (
     <article className="product-card">
       <div className="product-media-wrap">
+        <span className="product-media-sheen" aria-hidden="true" />
         <Link to={`/products/${product.slug}`} className="product-image-link" aria-label={`View ${product.name}`}>
           <img
             src={primaryImage}
@@ -55,6 +56,10 @@ export function ProductCard({ product }) {
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
         </button>
+        <div className="product-media-caption">
+          <span>{product.origin.split(",")[0]}</span>
+          <span>{product.stockState === "low_stock" ? "Last few" : "Ready to ship"}</span>
+        </div>
       </div>
 
       <div className="product-meta">
@@ -65,6 +70,12 @@ export function ProductCard({ product }) {
           <Link to={`/products/${product.slug}`} className="product-title-link">
             <h3 className="product-title">{product.name}</h3>
           </Link>
+          <div className="product-supporting-meta">
+            <span>{product.fabric}</span>
+            <span className="product-rating" aria-label={`${product.rating} out of 5 stars`}>
+              <span aria-hidden="true">★★★★★</span> {product.rating}
+            </span>
+          </div>
         </div>
 
         <div className="product-pricing-bar">
