@@ -41,8 +41,8 @@ export const products = [
     delivery: "Ships in 2–4 business days with insured express courier. Complimentary pan-India shipping.",
     returns: "Eligible for exchange or store credit within 7 days of delivery in pristine, unworn condition.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/1.svg",
+      "/products/1-alt.svg"
     ],
     rating: 4.9,
     reviewCount: 18,
@@ -94,8 +94,8 @@ export const products = [
     delivery: "Ships in 2–4 business days. Hand-packed in signature presentation box.",
     returns: "Eligible for exchange within 7 days of delivery.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/2.svg",
+      "/products/2-alt.svg"
     ],
     rating: 5.0,
     reviewCount: 24,
@@ -147,8 +147,8 @@ export const products = [
     delivery: "Ships in 2–4 business days across India. Global shipping available.",
     returns: "Full return or exchange within 7 days.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/3.svg",
+      "/products/3-alt.svg"
     ],
     rating: 4.8,
     reviewCount: 14,
@@ -200,8 +200,8 @@ export const products = [
     delivery: "Ships in 2–4 business days. Insured delivery with signature verification.",
     returns: "Eligible for exchange or credit within 7 days.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/4.svg",
+      "/products/4-alt.svg"
     ],
     rating: 4.9,
     reviewCount: 11,
@@ -253,8 +253,8 @@ export const products = [
     delivery: "Ships in 1–3 business days. Ready to dispatch.",
     returns: "Eligible for 7-day hassle-free returns.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/5.svg",
+      "/products/5-alt.svg"
     ],
     rating: 4.7,
     reviewCount: 29,
@@ -306,8 +306,8 @@ export const products = [
     delivery: "Ships in 2–4 business days. Ready to wear.",
     returns: "7 days standard return policy.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/6.svg",
+      "/products/6-alt.svg"
     ],
     rating: 4.9,
     reviewCount: 32,
@@ -358,8 +358,8 @@ export const products = [
     delivery: "Ships in 2–4 business days. Ready to dispatch.",
     returns: "Eligible for exchange within 7 days.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/7.svg",
+      "/products/7-alt.svg"
     ],
     rating: 4.8,
     reviewCount: 9,
@@ -411,8 +411,8 @@ export const products = [
     delivery: "Ships next business day. Express delivery available.",
     returns: "7 days return policy.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/8.svg",
+      "/products/8-alt.svg"
     ],
     rating: 5.0,
     reviewCount: 38,
@@ -464,8 +464,8 @@ export const products = [
     delivery: "Ships in 2–4 business days. Hand-delivered in wooden heirloom box.",
     returns: "Eligible for exchange or concierge consultation within 7 days.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/9.svg",
+      "/products/9-alt.svg"
     ],
     rating: 5.0,
     reviewCount: 7,
@@ -517,8 +517,8 @@ export const products = [
     delivery: "Ships in 2–4 business days with express tracking.",
     returns: "Full return or exchange within 7 days.",
     images: [
-      "/public/products/1.svg",
-      "/public/products/1-alt.svg"
+      "/products/10.svg",
+      "/products/10-alt.svg"
     ],
     rating: 4.9,
     reviewCount: 16,

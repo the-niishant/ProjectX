@@ -175,7 +175,7 @@ export function Home() {
         <div className="hero-detail-card">
           <div className="detail-frame-border"></div>
           <img
-            src="https://images.unsplash.com/photo-1609357605129-26f69add5d6e?auto=format&fit=crop&w=600&q=85"
+            src="/images/collection-hero.svg"
             alt="Macro detail of hand-interlocked zari border"
           />
           <span className="detail-card-caption">

@@ -43,6 +43,8 @@ export function CheckoutPage() {
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState("");
   const [formErrors, setFormErrors] = useState({});
+  const shippingFee = isShippingFree ? 0 : 450;
+  const orderTotal = bagTotal + shippingFee;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -84,10 +86,11 @@ export function CheckoutPage() {
   const handleFinalSubmit = (e) => {
     e.preventDefault();
     const generatedOrderNum = `EW-${Math.floor(100000 + Math.random() * 900000)}`;
+    const completedOrderTotal = orderTotal;
     setOrderNumber(generatedOrderNum);
     setIsOrderPlaced(true);
     clearBag();
-    trackEvent("submit_order", { orderNumber: generatedOrderNum, total: bagTotal });
+    trackEvent("submit_order", { orderNumber: generatedOrderNum, total: completedOrderTotal });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -117,7 +120,7 @@ export function CheckoutPage() {
             </div>
             <div className="order-info-line">
               <span>Total payment</span>
-              <strong>{money(bagTotal)} (Demo completed)</strong>
+              <strong>{money(orderTotal)} (Demo completed)</strong>
             </div>
           </div>
 
@@ -481,7 +484,7 @@ export function CheckoutPage() {
                   ← Back to delivery
                 </button>
                 <button type="submit" className="primary-button place-order-btn">
-                  Place demo order · {money(bagTotal)} <span>↗</span>
+                  Place demo order · {money(orderTotal)} <span>↗</span>
                 </button>
               </div>
             </form>
@@ -548,11 +551,11 @@ export function CheckoutPage() {
               )}
               <div className="total-line-row">
                 <span>Insured Courier</span>
-                <span>{isShippingFree ? "Complimentary" : "₹450"}</span>
+                <span>{isShippingFree ? "Complimentary" : money(shippingFee)}</span>
               </div>
               <div className="total-line-row final-due-row">
                 <strong>Total Due</strong>
-                <strong>{money(bagTotal)}</strong>
+                <strong>{money(orderTotal)}</strong>
               </div>
             </div>
           </div>

@@ -24,6 +24,8 @@ export function CartPage() {
 
   const [inputCode, setInputCode] = useState("");
   const navigate = useNavigate();
+  const shippingFee = isShippingFree ? 0 : 450;
+  const orderTotal = bagTotal + shippingFee;
 
   const handleApply = (e) => {
     e.preventDefault();
@@ -173,11 +175,11 @@ export function CartPage() {
                 )}
                 <div className="summary-line">
                   <span>Insured Shipping</span>
-                  <span>{isShippingFree ? "Complimentary" : "₹450"}</span>
+                  <span>{isShippingFree ? "Complimentary" : money(shippingFee)}</span>
                 </div>
                 <div className="summary-line total-line">
                   <strong>Estimated Total</strong>
-                  <strong>{money(bagTotal)}</strong>
+                  <strong>{money(orderTotal)}</strong>
                 </div>
               </div>
 
@@ -188,7 +190,7 @@ export function CartPage() {
               <button
                 className="primary-button checkout-btn-full"
                 onClick={() => {
-                  trackEvent("begin_checkout", { source: "cart_page", itemCount: bag.length, total: bagTotal });
+                  trackEvent("begin_checkout", { source: "cart_page", itemCount: bag.length, total: orderTotal });
                   navigate("/checkout");
                 }}
               >

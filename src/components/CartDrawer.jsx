@@ -25,6 +25,8 @@ export function CartDrawer() {
 
   const [inputCode, setInputCode] = useState("");
   const navigate = useNavigate();
+  const shippingFee = isShippingFree ? 0 : 450;
+  const orderTotal = bagTotal + shippingFee;
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -50,7 +52,7 @@ export function CartDrawer() {
 
   const handleCheckoutClick = () => {
     setIsCartOpen(false);
-    trackEvent("begin_checkout", { source: "cart_drawer", itemCount: bag.length, total: bagTotal });
+    trackEvent("begin_checkout", { source: "cart_drawer", itemCount: bag.length, total: orderTotal });
     navigate("/checkout");
   };
 
@@ -204,11 +206,11 @@ export function CartDrawer() {
                 )}
                 <div className="financial-row">
                   <span>Shipping</span>
-                  <span>{isShippingFree ? "Complimentary" : "₹450"}</span>
+                  <span>{isShippingFree ? "Complimentary" : money(shippingFee)}</span>
                 </div>
                 <div className="financial-row total-row">
                   <strong>Estimated Total</strong>
-                  <strong>{money(bagTotal)}</strong>
+                  <strong>{money(orderTotal)}</strong>
                 </div>
               </div>
 
@@ -221,7 +223,7 @@ export function CartDrawer() {
                   className="primary-button checkout-now-btn"
                   onClick={handleCheckoutClick}
                 >
-                  Continue to checkout · {money(bagTotal)} <span>↗</span>
+                  Continue to checkout · {money(orderTotal)} <span>↗</span>
                 </button>
                 <Link
                   to="/cart"
