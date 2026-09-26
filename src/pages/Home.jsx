@@ -369,7 +369,7 @@ export function Home() {
         <div className="loom-image-column">
           <img
             className="loom-feature-img"
-            src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=1200&q=85"
+            src="/images/collection-hero.svg"
             alt="Hands working on a traditional wooden pit loom"
             loading="lazy"
           />

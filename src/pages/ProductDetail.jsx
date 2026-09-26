@@ -390,7 +390,7 @@ export function ProductDetail() {
 
         <div className="frequently-bought-card">
           <img
-            src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=600&q=80"
+            src="/products/1.svg"
             alt="Hand-finished silk blouse piece"
           />
           <div className="frequently-bought-details">
@@ -406,7 +406,7 @@ export function ProductDetail() {
                   category: "Blouse Piece",
                   colour: product.colour,
                   price: 3400,
-                  images: ["https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=600&q=80"]
+                  images: ["/products/1.svg"]
                 }, 1)}
               >
                 Add accompaniment to bag
