@@ -1,3 +1,12 @@
+const textileGallery = (id, primary, alternate) => [
+  primary,
+  alternate,
+  `https://picsum.photos/seed/elite-weavers-${id}-drape/900/1200`,
+  `https://picsum.photos/seed/elite-weavers-${id}-detail/900/1200`,
+  `https://picsum.photos/seed/elite-weavers-${id}-loom/900/1200`,
+  `https://picsum.photos/seed/elite-weavers-${id}-texture/900/1200`
+];
+
 export const products = [
   {
     id: 1,
@@ -40,10 +49,7 @@ export const products = [
     ],
     delivery: "Ships in 2–4 business days with insured express courier. Complimentary pan-India shipping.",
     returns: "Eligible for exchange or store credit within 7 days of delivery in pristine, unworn condition.",
-    images: [
-      "/products/1.svg",
-      "/products/1-alt.svg"
-    ],
+    images: textileGallery(1, "/products/1.svg", "/products/1-alt.svg"),
     rating: 4.9,
     reviewCount: 18,
     isNew: true,
@@ -93,10 +99,7 @@ export const products = [
     ],
     delivery: "Ships in 2–4 business days. Hand-packed in signature presentation box.",
     returns: "Eligible for exchange within 7 days of delivery.",
-    images: [
-      "/products/2.svg",
-      "/products/2-alt.svg"
-    ],
+    images: textileGallery(2, "/products/2.svg", "/products/2-alt.svg"),
     rating: 5.0,
     reviewCount: 24,
     isNew: false,
@@ -146,10 +149,7 @@ export const products = [
     ],
     delivery: "Ships in 2–4 business days across India. Global shipping available.",
     returns: "Full return or exchange within 7 days.",
-    images: [
-      "/products/3.svg",
-      "/products/3-alt.svg"
-    ],
+    images: textileGallery(3, "/products/3.svg", "/products/3-alt.svg"),
     rating: 4.8,
     reviewCount: 14,
     isNew: false,
@@ -199,10 +199,7 @@ export const products = [
     ],
     delivery: "Ships in 2–4 business days. Insured delivery with signature verification.",
     returns: "Eligible for exchange or credit within 7 days.",
-    images: [
-      "/products/4.svg",
-      "/products/4-alt.svg"
-    ],
+    images: textileGallery(4, "/products/4.svg", "/products/4-alt.svg"),
     rating: 4.9,
     reviewCount: 11,
     isNew: false,
@@ -252,10 +249,7 @@ export const products = [
     ],
     delivery: "Ships in 1–3 business days. Ready to dispatch.",
     returns: "Eligible for 7-day hassle-free returns.",
-    images: [
-      "/products/5.svg",
-      "/products/5-alt.svg"
-    ],
+    images: textileGallery(5, "/products/5.svg", "/products/5-alt.svg"),
     rating: 4.7,
     reviewCount: 29,
     isNew: false,
@@ -305,10 +299,7 @@ export const products = [
     ],
     delivery: "Ships in 2–4 business days. Ready to wear.",
     returns: "7 days standard return policy.",
-    images: [
-      "/products/6.svg",
-      "/products/6-alt.svg"
-    ],
+    images: textileGallery(6, "/products/6.svg", "/products/6-alt.svg"),
     rating: 4.9,
     reviewCount: 32,
     isNew: false,
@@ -357,10 +348,7 @@ export const products = [
     ],
     delivery: "Ships in 2–4 business days. Ready to dispatch.",
     returns: "Eligible for exchange within 7 days.",
-    images: [
-      "/products/7.svg",
-      "/products/7-alt.svg"
-    ],
+    images: textileGallery(7, "/products/7.svg", "/products/7-alt.svg"),
     rating: 4.8,
     reviewCount: 9,
     isNew: true,
@@ -410,10 +398,7 @@ export const products = [
     ],
     delivery: "Ships next business day. Express delivery available.",
     returns: "7 days return policy.",
-    images: [
-      "/products/8.svg",
-      "/products/8-alt.svg"
-    ],
+    images: textileGallery(8, "/products/8.svg", "/products/8-alt.svg"),
     rating: 5.0,
     reviewCount: 38,
     isNew: false,
@@ -463,10 +448,7 @@ export const products = [
     ],
     delivery: "Ships in 2–4 business days. Hand-delivered in wooden heirloom box.",
     returns: "Eligible for exchange or concierge consultation within 7 days.",
-    images: [
-      "/products/9.svg",
-      "/products/9-alt.svg"
-    ],
+    images: textileGallery(9, "/products/9.svg", "/products/9-alt.svg"),
     rating: 5.0,
     reviewCount: 7,
     isNew: false,
@@ -516,10 +498,7 @@ export const products = [
     ],
     delivery: "Ships in 2–4 business days with express tracking.",
     returns: "Full return or exchange within 7 days.",
-    images: [
-      "/products/10.svg",
-      "/products/10-alt.svg"
-    ],
+    images: textileGallery(10, "/products/10.svg", "/products/10-alt.svg"),
     rating: 4.9,
     reviewCount: 16,
     isNew: true,
