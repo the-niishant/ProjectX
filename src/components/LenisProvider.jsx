@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useRef } from "react";
-import Lenis from "@lenix/lenist";
+import Lenis from "lenis";
 
 const LenisContext = createContext(null);
 
