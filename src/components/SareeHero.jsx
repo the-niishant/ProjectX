@@ -58,6 +58,35 @@ export function SareeHero() {
           "-=0.6"
         );
 
+      // Give the editorial saree a slow fabric-like drift while it rests in view.
+      const floatingSaree = mediaRef.current?.querySelector(".hero-primary-photo");
+      const floatingSilk = mediaRef.current?.querySelector(".hero-floating-silk");
+      if (!prefersReducedMotion && floatingSaree) {
+        gsap.to(floatingSaree, {
+          x: 8,
+          y: -12,
+          rotation: 0.35,
+          scale: 1.025,
+          duration: 5.5,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut"
+        });
+      }
+      if (!prefersReducedMotion && floatingSilk) {
+        gsap.to(floatingSilk, {
+          x: -18,
+          y: 14,
+          rotation: -1.2,
+          scale: 1.04,
+          duration: 7,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+          delay: 0.4
+        });
+      }
+
       // 2. Hero Transformation on Scroll (AURELLE Reference transformation)
       if (!prefersReducedMotion && heroFrameRef.current) {
         const scrollTl = gsap.timeline({
@@ -117,6 +146,15 @@ export function SareeHero() {
                 alt="Editorial portrait of a woman draped in deep crimson and antique gold zari bridal saree"
                 className="hero-primary-photo"
                 loading="eager"
+                referrerPolicy="no-referrer"
+              />
+              <img
+                src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=82"
+                alt=""
+                className="hero-floating-silk"
+                loading="eager"
+                aria-hidden="true"
+                referrerPolicy="no-referrer"
               />
               <div className="hero-atmosphere-scrim" />
               <div className="hero-vignette" />

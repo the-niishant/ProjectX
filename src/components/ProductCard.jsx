@@ -59,6 +59,19 @@ export function ProductCard({ product }) {
         </button>
 
         <button
+          className="card-hover-action-bar"
+          onClick={(e) => {
+            e.preventDefault();
+            addToBag(product, 1);
+            trackEvent("add_to_bag_card", { productId: product.id, productName: product.name });
+          }}
+          aria-label={`Add ${product.name} to bag`}
+        >
+          <span>Add to Bag</span>
+          <span className="btn-gold-accent">✦</span>
+        </button>
+
+        <button
           className={`wishlist-heart-btn ${wished ? "is-active" : ""}`}
           onClick={(e) => {
             e.preventDefault();

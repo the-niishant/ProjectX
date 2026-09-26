@@ -28,6 +28,7 @@ export function LenisProvider({ children }) {
     });
 
     setLenisInstance(lenis);
+    window.lenis = lenis;
 
     // Sync Lenis scroll with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
@@ -41,6 +42,7 @@ export function LenisProvider({ children }) {
 
     return () => {
       gsap.ticker.remove(tickerCallback);
+      delete window.lenis;
       lenis.destroy();
       setLenisInstance(null);
     };
