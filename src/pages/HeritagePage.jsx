@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { heritageStories, trustStatement } from "../data/heritage";
+import { products } from "../data/products";
 
 export function HeritagePage() {
   return (
@@ -34,7 +35,11 @@ export function HeritagePage() {
             key={story.id}
           >
             <div className="story-image-wrap">
-              <img src={story.image} alt={story.title} loading="lazy" />
+              <img
+                src={products[idx % products.length]?.images?.[0] || story.image}
+                alt={story.title}
+                loading="lazy"
+              />
               <div className="story-region-badge">{story.region}</div>
             </div>
 

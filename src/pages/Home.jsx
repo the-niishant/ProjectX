@@ -11,6 +11,11 @@ import { trackEvent } from "../utils/analytics";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function getCollectionImage(collection) {
+  return products.find((product) => product.id === collection.productIds[0])?.images?.[0]
+    || collection.heroImage;
+}
+
 export function Home() {
   const containerRef = useRef(null);
   const [ready, setReady] = useState(false);
@@ -175,7 +180,7 @@ export function Home() {
         <div className="hero-detail-card">
           <div className="detail-frame-border"></div>
           <img
-            src="/images/collection-hero.svg"
+            src="/products/2-alt.svg"
             alt="Macro detail of hand-interlocked zari border"
           />
           <span className="detail-card-caption">
@@ -239,7 +244,7 @@ export function Home() {
               key={col.id}
               style={{ "--tile-color": col.color }}
             >
-              <img src={col.heroImage} alt={col.name} loading="lazy" />
+              <img src={getCollectionImage(col)} alt={col.name} loading="lazy" />
               <div className="collection-tile-scrim">
                 <span className="tile-kicker">{col.kicker}</span>
                 <h3 className="tile-title">{col.name}</h3>
@@ -369,7 +374,7 @@ export function Home() {
         <div className="loom-image-column">
           <img
             className="loom-feature-img"
-            src="/images/collection-hero.svg"
+            src="/products/6-alt.svg"
             alt="Hands working on a traditional wooden pit loom"
             loading="lazy"
           />

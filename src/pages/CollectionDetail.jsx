@@ -4,6 +4,11 @@ import { collections } from "../data/collections";
 import { products } from "../data/products";
 import { ProductCard } from "../components/ProductCard";
 
+function getCollectionImage(collection) {
+  return products.find((product) => product.id === collection.productIds[0])?.images?.[0]
+    || collection.heroImage;
+}
+
 export function CollectionDetail() {
   const { slug } = useParams();
   const collection = collections.find((c) => c.slug === slug);
@@ -42,7 +47,7 @@ export function CollectionDetail() {
           </div>
 
           <div className="collection-hero-media">
-            <img src={collection.heroImage} alt={collection.name} />
+            <img src={getCollectionImage(collection)} alt={collection.name} />
             <span className="collection-image-caption">
               {collection.imageCaption}
             </span>
@@ -109,7 +114,7 @@ export function CollectionDetail() {
               className="other-collection-card"
               key={col.id}
             >
-              <img src={col.heroImage} alt={col.name} loading="lazy" />
+              <img src={getCollectionImage(col)} alt={col.name} loading="lazy" />
               <div className="other-col-overlay">
                 <span className="other-kicker">{col.kicker}</span>
                 <h3>{col.name}</h3>
