@@ -16,7 +16,7 @@ const fabricsData = [
     handFeel: "Smooth, cool to the touch, dense and fluid",
     weight: "720–860 grams (Structured heavy drape)",
     transparency: "Completely opaque",
-    textureImg: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=85",
+    textureImg: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=85",
     matchingProductIds: [2, 1]
   },
   {

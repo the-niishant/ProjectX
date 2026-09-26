@@ -25,12 +25,30 @@ export function CraftSection() {
       const isDesktop = window.innerWidth >= 1024;
 
       if (!prefersReducedMotion && isDesktop) {
+        // Word reveal starts when section scrolls into view
+        gsap.fromTo(
+          headlineRef.current?.querySelectorAll(".word-reveal"),
+          { y: "100%", opacity: 0 },
+          {
+            y: "0%",
+            opacity: 1,
+            stagger: 0.08,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse"
+            }
+          }
+        );
+
         // Pinned Split-Screen Animation
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            end: "+=1800",
+            end: "+=1600",
             pin: true,
             scrub: 0.8,
             anticipatePin: 1
@@ -40,17 +58,10 @@ export function CraftSection() {
         // Ken-Burns image zoom & subtle pan
         tl.fromTo(
           imageRef.current,
-          { scale: 1.15, xPercent: -3 },
+          { scale: 1.15, xPercent: -2 },
           { scale: 1.0, xPercent: 0, ease: "none" },
           0
         )
-          // Text word reveal
-          .fromTo(
-            headlineRef.current?.querySelectorAll(".word-reveal"),
-            { y: "100%", opacity: 0 },
-            { y: "0%", opacity: 1, stagger: 0.08, ease: "power2.out" },
-            0.1
-          )
           // Scrub counters from 0 to target
           .to(
             counts,
@@ -65,7 +76,7 @@ export function CraftSection() {
                 setCounter3(Math.round(counts.artisans));
               }
             },
-            0.2
+            0
           );
       } else {
         // Fallback for mobile / reduced motion: trigger when in view
@@ -102,14 +113,14 @@ export function CraftSection() {
           <div className="craft-image-frame">
             <img
               ref={imageRef}
-              src="https://images.unsplash.com/photo-1598961942613-ba897716405b?auto=format&fit=crop&w=1400&q=85"
-              alt="Master artisan weaving pure silk warp and zari weft on traditional wooden handloom"
+              src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?auto=format&fit=crop&w=1400&q=85"
+              alt="Master artisan weaving authentic pure zari warp and silk weft"
               className="craft-macro-photo"
               loading="lazy"
             />
             <div className="craft-media-badge">
               <span className="badge-dot" />
-              <span>PIT LOOM ATELIER · VARANASI</span>
+              <span>HANDLOOM ATELIER · VARANASI</span>
             </div>
             <div className="craft-detail-thumb">
               <img
