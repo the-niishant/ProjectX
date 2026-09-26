@@ -256,11 +256,9 @@ export function Home() {
         <div className="craft-values-track">
           <span>Pure Handloom</span>
           <i>✦</i>
-          <span>Silk Mark Certified</span>
-          <i>✦</i>
           <span>Woven in India</span>
           <i>✦</i>
-          <span>Zero Synthetic Blends</span>
+          <span>Pure Mulberry Silk</span>
           <i>✦</i>
           <span>Direct Weaver Partnerships</span>
           <i>✦</i>
@@ -268,7 +266,7 @@ export function Home() {
           <i>✦</i>
           <span>Pure Handloom</span>
           <i>✦</i>
-          <span>Silk Mark Certified</span>
+          <span>Woven with Care</span>
         </div>
       </div>
 

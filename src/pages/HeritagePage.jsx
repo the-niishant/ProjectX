@@ -61,8 +61,8 @@ export function HeritagePage() {
           <p>We trace every single warp and weft to its registered master weaver cluster.</p>
         </div>
         <div className="credential-column">
-          <h4>02 / Silk Mark Certified</h4>
-          <p>Every pure silk piece is backed by government-accredited laboratory testing.</p>
+          <h4>02 / Handloom Authentic</h4>
+          <p>We ensure every piece is woven on traditional handlooms by master craftspeople.</p>
         </div>
         <div className="credential-column">
           <h4>03 / Direct Artisan Parity</h4>

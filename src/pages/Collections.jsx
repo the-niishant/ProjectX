@@ -112,7 +112,7 @@ export function Collections() {
           </h1>
           <p className="collections-page-intro">
             Browse regional craft, familiar fabrics, and the colours that stay with you.
-            Every piece is woven by hand with certified natural fibers and pure zari.
+            Every piece is woven by hand using natural fibers and zari.
           </p>
         </div>
 

@@ -197,7 +197,7 @@ export function CartPage() {
 
               <div className="summary-perks">
                 <span>✦ Signature unbleached cotton presentation box</span>
-                <span>✦ Silk Mark handloom authenticity certificate</span>
+                <span>✦ Handwoven authenticity guarantee</span>
                 <span>✦ 7-Day heritage exchange promise</span>
               </div>
             </div>

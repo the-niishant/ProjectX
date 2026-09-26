@@ -64,7 +64,7 @@ export function Footer() {
             <ul>
               <li><span className="footer-static-link">Complimentary Shipping (₹10k+)</span></li>
               <li><span className="footer-static-link">7-Day Heritage Exchange</span></li>
-              <li><span className="footer-static-link">Silk Mark Certified</span></li>
+              <li><span className="footer-static-link">Handloom authentic</span></li>
               <li><span className="footer-static-link">concierge@eliteweavers.in</span></li>
             </ul>
           </div>
