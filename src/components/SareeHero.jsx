@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Hero3DExperience } from "./Hero3DExperience";
+
+const Hero3DExperience = lazy(() =>
+  import("./Hero3DExperience").then((mod) => ({ default: mod.Hero3DExperience }))
+);
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -119,7 +122,19 @@ export function SareeHero() {
               <div className="hero-vignette" />
             </>
           ) : (
-            <Hero3DExperience active={true} />
+            <Suspense
+              fallback={
+                <div className="hero-3d-fallback">
+                  <img
+                    src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1600&q=85"
+                    alt="Tactile silk fabric drape loading"
+                    className="hero-3d-fallback-img"
+                  />
+                </div>
+              }
+            >
+              <Hero3DExperience active={true} />
+            </Suspense>
           )}
         </div>
 

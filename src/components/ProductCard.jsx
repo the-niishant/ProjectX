@@ -9,6 +9,14 @@ export function ProductCard({ product }) {
 
   const primaryImage = product.images?.[0] || product.image;
   const hoverImage = product.images?.[1] || product.imageAlt || primaryImage;
+  const fallbackImage = `/products/${product.id}.svg`;
+  const fallbackHoverImage = `/products/${product.id}-alt.svg`;
+
+  const useFallbackImage = (event, fallback) => {
+    if (event.currentTarget.src.endsWith(fallback)) return;
+    event.currentTarget.onerror = null;
+    event.currentTarget.src = fallback;
+  };
 
   return (
     <article className="product-card">
@@ -20,6 +28,9 @@ export function ProductCard({ product }) {
             alt={`${product.name} saree draped, showing ${product.colour} body`}
             className="product-img-primary"
             loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
+            onError={(event) => useFallbackImage(event, fallbackImage)}
           />
           {hoverImage && hoverImage !== primaryImage && (
             <img
@@ -27,6 +38,9 @@ export function ProductCard({ product }) {
               alt={`${product.name} craft and border detail`}
               className="product-img-hover"
               loading="lazy"
+              decoding="async"
+              referrerPolicy="no-referrer"
+              onError={(event) => useFallbackImage(event, fallbackHoverImage)}
             />
           )}
         </Link>
