@@ -196,6 +196,37 @@ function App() {
     return () => window.removeEventListener('pointermove', onPointer)
   }, [])
 
+  useEffect(() => {
+    const reduce = prefersReducedMotion()
+    const finePointer = window.matchMedia('(pointer: fine)').matches
+    if (reduce || !finePointer) return undefined
+    const cards = [...document.querySelectorAll('.project-image-wrap')]
+    const cleanups = cards.map((card) => {
+      const onMove = (event) => {
+        const bounds = card.getBoundingClientRect()
+        const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 2
+        const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 2
+        card.style.setProperty('--card-rotate-x', `${y * -3}deg`)
+        card.style.setProperty('--card-rotate-y', `${x * 3}deg`)
+        card.style.setProperty('--card-glow-x', `${(x + 1) * 50}%`)
+        card.style.setProperty('--card-glow-y', `${(y + 1) * 50}%`)
+      }
+      const reset = () => {
+        card.style.setProperty('--card-rotate-x', '0deg')
+        card.style.setProperty('--card-rotate-y', '0deg')
+        card.style.setProperty('--card-glow-x', '50%')
+        card.style.setProperty('--card-glow-y', '50%')
+      }
+      card.addEventListener('pointermove', onMove)
+      card.addEventListener('pointerleave', reset)
+      return () => {
+        card.removeEventListener('pointermove', onMove)
+        card.removeEventListener('pointerleave', reset)
+      }
+    })
+    return () => cleanups.forEach((cleanup) => cleanup())
+  }, [])
+
   const closeMenu = () => setMenuOpen(false)
 
   return (
