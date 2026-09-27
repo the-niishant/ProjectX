@@ -206,6 +206,14 @@ function App() {
         <section className="hero" aria-labelledby="hero-title">
           <div ref={heroMedia} className="hero-media" role="img" aria-label="Abstract light passing across a dark architectural surface" />
           <div className="hero-scrim" />
+          <div className="hero-orbit hero-orbit-one" aria-hidden="true" />
+          <div className="hero-orbit hero-orbit-two" aria-hidden="true" />
+          <aside className="hero-profile-card" aria-label="Portfolio profile">
+            <span className="profile-card-label">Portfolio / 2026</span>
+            <strong>B.Tech</strong>
+            <span className="profile-card-role">AI + ML engineer<br />creative technologist</span>
+            <span className="profile-card-mark">PX<span>.</span></span>
+          </aside>
           <div className="hero-content">
             <p className="hero-kicker">Creative developer / Independent practice</p>
             <h1 id="hero-title">

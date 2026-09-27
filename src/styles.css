@@ -53,6 +53,18 @@ body:has(a:hover) .cursor-dot, body:has(button:hover) .cursor-dot { width: 34px;
 .hero { min-height: 100dvh; position: relative; display: flex; align-items: flex-end; padding: 0 8vw 9vh; isolation: isolate; overflow: hidden; }
 .hero-media { position: absolute; inset: -4%; z-index: -3; background: url('https://picsum.photos/seed/cinematic-monolith/2200/1600') center / cover; filter: saturate(.38) contrast(1.08) brightness(.67); }
 .hero-scrim { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, rgba(10,10,10,.77) 0%, rgba(10,10,10,.2) 70%), linear-gradient(0deg, rgba(10,10,10,.72), transparent 48%); }
+.hero-orbit { position: absolute; z-index: -1; right: 11vw; top: 25%; width: min(31vw, 430px); aspect-ratio: 1; border: 1px solid rgba(245, 242, 236, .16); border-radius: 50%; pointer-events: none; transform: rotate(-21deg); }
+.hero-orbit::after { content: ''; position: absolute; top: 12%; left: 16%; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 26px rgba(201, 162, 75, .75); }
+.hero-orbit-one { animation: orbit-drift 18s linear infinite; }
+.hero-orbit-two { width: min(23vw, 320px); top: 34%; right: 15vw; transform: rotate(42deg); border-color: rgba(201, 162, 75, .28); animation: orbit-drift-reverse 23s linear infinite; }
+.hero-profile-card { position: absolute; z-index: 1; right: 15vw; top: 39%; width: min(220px, 24vw); min-height: 238px; padding: 18px; border: 1px solid rgba(245, 242, 236, .28); border-radius: var(--radius-card); background: rgba(10, 10, 10, .38); box-shadow: inset 0 1px 0 rgba(245, 242, 236, .12), 0 24px 60px rgba(0, 0, 0, .28); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); animation: card-float 6s var(--ease-smooth) infinite; }
+.profile-card-label, .profile-card-role { display: block; color: rgba(245, 242, 236, .62); font: 9px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .12em; line-height: 1.5; }
+.hero-profile-card strong { display: block; margin: 56px 0 10px; color: var(--paper); font-size: 38px; font-weight: 500; letter-spacing: -.08em; }
+.profile-card-mark { position: absolute; right: 18px; bottom: 16px; color: var(--paper); font-size: 19px; font-weight: 700; letter-spacing: -.09em; }
+.profile-card-mark span { color: var(--accent); }
+@keyframes card-float { 0%, 100% { transform: translate3d(0, 0, 0) rotate(1deg); } 50% { transform: translate3d(0, -14px, 0) rotate(-1deg); } }
+@keyframes orbit-drift { to { transform: rotate(339deg); } }
+@keyframes orbit-drift-reverse { to { transform: rotate(-318deg); } }
 .hero-content { max-width: 780px; }
 .hero-kicker, .section-kicker { margin: 0 0 20px; color: var(--accent); font: 10px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .2em; }
 .hero h1 { margin: 0; font-size: clamp(58px, 9vw, 142px); font-weight: 500; letter-spacing: -.08em; line-height: .86; }
@@ -196,6 +208,12 @@ blockquote { max-width: 930px; margin: 38px auto; font-size: clamp(30px, 4vw, 58
   .menu-open .mobile-nav { transform: translateY(0); }
   .mobile-nav a { font-size: 28px; letter-spacing: -.06em; }
   .hero { min-height: 100dvh; padding: 0 6vw 90px; }
+  .hero-orbit { right: -14vw; top: 18%; width: 68vw; opacity: .7; }
+  .hero-orbit-two { right: -7vw; top: 25%; width: 52vw; }
+  .hero-profile-card { top: 24%; right: 9vw; width: 156px; min-height: 172px; padding: 13px; }
+  .hero-profile-card strong { margin-top: 34px; font-size: 29px; }
+  .profile-card-label, .profile-card-role { font-size: 7px; }
+  .profile-card-mark { right: 13px; bottom: 11px; font-size: 15px; }
   .hero h1 { font-size: clamp(55px, 15vw, 100px); }
   .hero-copy { max-width: 300px; margin: 27px 0; }
   .hero-foot { left: 6vw; right: 6vw; bottom: 25px; }
@@ -251,6 +269,7 @@ blockquote { max-width: 930px; margin: 38px auto; font-size: clamp(30px, 4vw, 58
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .hero-orbit-one, .hero-orbit-two, .hero-profile-card { animation: none; }
   .story-steps { min-height: auto; }
   .story-step, .story-step:first-child { position: relative; inset: auto; visibility: visible; opacity: 1; transform: none; margin-bottom: 42px; }
   .story-progress { display: none; }
