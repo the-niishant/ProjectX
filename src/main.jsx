@@ -356,7 +356,7 @@ function App() {
           </div>
         </section>
 
-        <section ref={storySection} className="featured-story">
+        <section ref={storySection} className="featured-story" aria-label="Morrow House case study">
           <div className="story-visual" data-reveal>
             {storyFrames.map(([label, image], index) => <img className="story-image-frame" key={label} src={image} alt={`${label} view of the Morrow House project`} loading={index === 0 ? 'eager' : 'lazy'} />)}
             <span className="story-visual-label">Morrow House / Case study</span>
