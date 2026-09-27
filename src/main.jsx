@@ -11,41 +11,41 @@ gsap.registerPlugin(ScrollTrigger)
 const projects = [
   {
     number: '01',
-    title: 'Morrow House',
-    category: 'Digital identity / Commerce',
+    title: 'Neural Canvas',
+    category: 'AI product / Experience',
     year: '2026',
-    description: 'A quiet commerce experience for a design-led furniture studio.',
+    description: 'A visual workspace for turning model output into confident human decisions.',
     image: 'https://picsum.photos/seed/morrow-house/1400/1050',
     featured: true,
   },
   {
     number: '02',
-    title: 'Field Notes',
-    category: 'Editorial system / WebGL',
+    title: 'Signal / 01',
+    category: 'Data product / Motion',
     year: '2025',
-    description: 'A living archive for photographers working at the edge of place.',
+    description: 'An observability layer that makes complex systems feel calm, clear and alive.',
     image: 'https://picsum.photos/seed/field-notes/1400/1050',
   },
   {
     number: '03',
-    title: 'Aster Studio',
-    category: 'Portfolio / Motion',
+    title: 'Orbit OS',
+    category: 'Design system / Frontend',
     year: '2025',
-    description: 'An elastic portfolio system built for a small creative practice.',
+    description: 'A modular interface language for teams shipping intelligent products at speed.',
     image: 'https://picsum.photos/seed/aster-studio/1400/1050',
   },
 ]
 
 const services = [
-  ['01', 'Frontend development', 'Interfaces that stay fast, precise and easy to evolve.'],
-  ['02', 'Creative development', 'Ideas translated into tactile digital experiences.'],
-  ['03', 'Interaction design', 'Motion with a job to do: guide, reveal and connect.'],
-  ['04', 'AI + ML interfaces', 'Human-centred product surfaces for intelligent systems.'],
+  ['01', 'Frontend engineering', 'Interfaces that stay fast, precise and easy to evolve.'],
+  ['02', 'AI + ML products', 'Human-centred surfaces for intelligent systems and model workflows.'],
+  ['03', 'Creative technology', 'Ideas translated into tactile digital experiences.'],
+  ['04', 'Interaction design', 'Motion with a job to do: guide, reveal and connect.'],
   ['05', 'Data experiences', 'Clear visual stories from complex information.'],
-  ['06', 'Design systems', 'A clear visual language that holds together at every scale.'],
+  ['06', 'Design systems', 'A visual language that holds together at every scale.'],
 ]
 
-const stack = ['React', 'TypeScript', 'GSAP', 'Three.js', 'WebGL', 'CSS']
+const stack = ['React', 'Python', 'TypeScript', 'TensorFlow', 'GSAP', 'Three.js', 'WebGL', 'CSS']
 
 const capabilitySignals = [
   ['01', 'Model thinking', 'Turning complex AI behaviour into calm, legible flows.'],
@@ -129,6 +129,13 @@ function App() {
         gsap.fromTo('.hero-line', { yPercent: 110 }, { yPercent: 0, stagger: 0.08, duration: MOTION.duration.entrance, delay: 0.15, ease: MOTION.ease.cinematic })
         gsap.fromTo('.hero-kicker, .hero-copy, .hero-actions', { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.1, duration: MOTION.duration.reveal, delay: 0.45, ease: MOTION.ease.reveal })
         gsap.fromTo(heroMedia.current, { scale: 1.12 }, { scale: 1, duration: MOTION.duration.cinematic, delay: 0.1, ease: MOTION.ease.reveal })
+        gsap.fromTo('.hero-profile-card, .hero-float-card, .hero-data-stream, .hero-coordinate', { opacity: 0 }, {
+          opacity: 1,
+          stagger: 0.08,
+          duration: MOTION.duration.reveal,
+          delay: 0.55,
+          ease: MOTION.ease.cinematic,
+        })
         gsap.to(heroMedia.current, {
           yPercent: 10,
           scale: 1.05,
@@ -223,12 +230,42 @@ function App() {
   }, [])
 
   useEffect(() => {
+    const reduce = prefersReducedMotion()
+    const finePointer = window.matchMedia('(pointer: fine)').matches
+    if (reduce || !finePointer) return undefined
+
+    const cursor = document.querySelector('.cursor-dot')
+    const xTo = gsap.quickTo(cursor, 'x', { duration: 0.35, ease: 'power3.out' })
+    const yTo = gsap.quickTo(cursor, 'y', { duration: 0.35, ease: 'power3.out' })
     const onPointer = (event) => {
-      document.documentElement.style.setProperty('--cursor-x', `${event.clientX}px`)
-      document.documentElement.style.setProperty('--cursor-y', `${event.clientY}px`)
+      xTo(event.clientX)
+      yTo(event.clientY)
     }
+    const magneticTargets = [...document.querySelectorAll('.button, .text-link, .contact-link')]
+    const cleanups = magneticTargets.map((target) => {
+      const xToTarget = gsap.quickTo(target, 'x', { duration: 0.45, ease: 'power3.out' })
+      const yToTarget = gsap.quickTo(target, 'y', { duration: 0.45, ease: 'power3.out' })
+      const onMove = (event) => {
+        const bounds = target.getBoundingClientRect()
+        xToTarget((event.clientX - bounds.left - bounds.width / 2) * 0.12)
+        yToTarget((event.clientY - bounds.top - bounds.height / 2) * 0.12)
+      }
+      const reset = () => {
+        xToTarget(0)
+        yToTarget(0)
+      }
+      target.addEventListener('pointermove', onMove)
+      target.addEventListener('pointerleave', reset)
+      return () => {
+        target.removeEventListener('pointermove', onMove)
+        target.removeEventListener('pointerleave', reset)
+      }
+    })
     window.addEventListener('pointermove', onPointer)
-    return () => window.removeEventListener('pointermove', onPointer)
+    return () => {
+      window.removeEventListener('pointermove', onPointer)
+      cleanups.forEach((cleanup) => cleanup())
+    }
   }, [])
 
   useEffect(() => {
@@ -275,6 +312,7 @@ function App() {
 
   return (
     <div ref={root} className="site-shell">
+      <a className="skip-link" href="#top">Skip to content</a>
       <div className="page-progress" aria-hidden="true" />
       <div className="cursor-dot" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
@@ -304,18 +342,28 @@ function App() {
           <div className="hero-orbit hero-orbit-one" aria-hidden="true" />
           <div className="hero-orbit hero-orbit-two" aria-hidden="true" />
           <aside className="hero-profile-card" aria-label="Portfolio profile">
-            <span className="profile-card-label">Portfolio / 2026</span>
-            <strong>B.Tech</strong>
+            <span className="profile-card-label">B.Tech / AIML / 2026</span>
+            <strong>NI.</strong>
             <span className="profile-card-role">AI + ML engineer<br />creative technologist</span>
             <span className="profile-card-mark">PX<span>.</span></span>
           </aside>
+          <div className="hero-float-card hero-float-card-signal" aria-hidden="true">
+            <span>MODEL STATUS</span><strong>98.4%</strong><b>↑ live confidence</b>
+          </div>
+          <div className="hero-float-card hero-float-card-stack" aria-hidden="true">
+            <span className="float-dot" /><span>BUILDING WITH</span><strong>AI / ML</strong>
+          </div>
+          <div className="hero-data-stream" aria-hidden="true">
+            <span>LATENT SPACE / 01</span><i /><span>HUMAN SIGNAL / 02</span><i /><span>MODEL LOOP / 03</span>
+          </div>
+          <div className="hero-coordinate" aria-hidden="true">28.6139° N<br />77.2090° E</div>
           <div className="hero-content">
-            <p className="hero-kicker">Creative developer / Independent practice</p>
+            <p className="hero-kicker">B.Tech AI + ML engineer / Creative developer</p>
             <h1 id="hero-title">
-              <span className="hero-line-wrap"><span className="hero-line">Digital work</span></span>
-              <span className="hero-line-wrap"><span className="hero-line hero-italic">with a pulse.</span></span>
+              <span className="hero-line-wrap"><span className="hero-line">Intelligence</span></span>
+              <span className="hero-line-wrap"><span className="hero-line hero-italic">with a human pulse.</span></span>
             </h1>
-            <p className="hero-copy">I design and build expressive interfaces for people shaping what comes next.</p>
+            <p className="hero-copy">I design and engineer expressive AI products where complex systems become clear, useful and impossible to ignore.</p>
             <div className="hero-actions">
               <a className="button button-solid" href="#work">View selected work <span>↗</span></a>
               <a className="text-link" href="#about">More about me <span>↗</span></a>
@@ -340,6 +388,8 @@ function App() {
               <article className={`project project-${index + 1}`} key={project.title} data-reveal>
                 <div className="project-image-wrap">
                   <img src={project.image} alt={`${project.title} project artwork`} loading={index === 0 ? 'eager' : 'lazy'} />
+                  <span className="project-scanline" aria-hidden="true" />
+                  <span className="project-status" aria-hidden="true">SYSTEM / {project.number} <i>LIVE</i></span>
                   <a className="image-link" href="#contact" aria-label={`Discuss ${project.title}`}>View <span>↗</span></a>
                 </div>
                 <div className="project-info">
@@ -356,18 +406,18 @@ function App() {
           </div>
         </section>
 
-        <section ref={storySection} className="featured-story" aria-label="Morrow House case study">
+        <section ref={storySection} className="featured-story" aria-label="Neural Canvas case study">
           <div className="story-visual" data-reveal>
-            {storyFrames.map(([label, image], index) => <img className="story-image-frame" key={label} src={image} alt={`${label} view of the Morrow House project`} loading={index === 0 ? 'eager' : 'lazy'} />)}
-            <span className="story-visual-label">Morrow House / Case study</span>
+            {storyFrames.map(([label, image], index) => <img className="story-image-frame" key={label} src={image} alt={`${label} view of the Neural Canvas project`} loading={index === 0 ? 'eager' : 'lazy'} />)}
+            <span className="story-visual-label">Neural Canvas / Case study</span>
           </div>
           <div className="story-content">
-            <p className="section-kicker">A closer look</p>
+            <p className="section-kicker">A closer look / Neural Canvas</p>
             <div className="story-steps">
-              <article className="story-step"><span>Overview</span><h2>Designing for the moment before the click.</h2><p>For Morrow House, the brief was simple: make a catalogue feel like a room worth entering.</p></article>
+              <article className="story-step"><span>Overview</span><h2>Designing for the moment before the click.</h2><p>For Neural Canvas, the brief was simple: make model output feel like a space worth entering.</p></article>
               <article className="story-step"><span>Challenge</span><h2>Make restraint feel alive.</h2><p>We shaped a slower interface around the materiality of the collection, without hiding the path to purchase.</p></article>
               <article className="story-step"><span>Approach</span><h2>Every detail earns its place.</h2><p>Editorial type, quiet transitions and a flexible system gave the studio room to keep telling its story.</p></article>
-              <article className="story-step"><span>Result</span><h2>A catalogue that feels like a room.</h2><p>The final experience makes browsing feel tactile, calm and unmistakably theirs.</p></article>
+              <article className="story-step"><span>Result</span><h2>A model workspace that feels human.</h2><p>The final experience makes exploration feel tactile, calm and unmistakably useful.</p></article>
             </div>
             <div className="story-index" aria-label="Case study progress">
               {storyFrames.map(([label]) => <span className="story-index-item" key={label}>{label}</span>)}
@@ -404,6 +454,7 @@ function App() {
               <span className="signal-ring signal-ring-two" aria-hidden="true" />
               <span className="signal-core" aria-hidden="true" />
               <div className="signal-copy"><span>{capabilitySignals[activeService % capabilitySignals.length][0]} / Signal</span><strong>{capabilitySignals[activeService % capabilitySignals.length][1]}</strong><p>{capabilitySignals[activeService % capabilitySignals.length][2]}</p></div>
+              <span className="signal-readout" aria-hidden="true">00 01 01 10 11 00</span>
             </div>
           </div>
         </section>
@@ -411,7 +462,7 @@ function App() {
         <section className="lab section-pad">
           <div className="lab-heading" data-reveal><p className="section-kicker">The lab</p><h2>Unfinished things<br />with <em>good bones.</em></h2></div>
           <div className="lab-grid">
-            <article className="lab-feature lab-feature-primary"><div className="lab-art lab-art-cyan"><span className="lab-art-grid" aria-hidden="true" /><span className="lab-art-orbit" aria-hidden="true" /></div><div><span>01 / Motion study</span><h3>Soft systems</h3></div></article>
+            <article className="lab-feature lab-feature-primary"><div className="lab-art lab-art-cyan"><span className="lab-art-grid" aria-hidden="true" /><span className="lab-art-orbit" aria-hidden="true" /><span className="lab-art-readout" aria-hidden="true">LATENCY<br /><b>12ms</b></span></div><div><span>01 / Motion study</span><h3>Soft systems</h3></div></article>
             <article className="lab-feature lab-offset"><div className="lab-art lab-art-orange"><span className="lab-art-core" aria-hidden="true" /><span className="lab-art-line" aria-hidden="true" /></div><div><span>02 / Interface study</span><h3>Objects in orbit</h3></div></article>
             <article className="lab-note"><span>Open experiments</span><strong>03</strong><p>Notes on motion, space and the web.</p><a className="text-link" href="#contact">See the lab <span>↗</span></a></article>
           </div>
@@ -426,7 +477,7 @@ function App() {
 
         <section id="about" className="about section-pad">
           <div className="about-image" data-reveal><img src="https://picsum.photos/seed/portrait-studio/1000/1300" alt="Portrait in a dark studio setting" loading="lazy" /><span className="about-image-caption">Creative developer / AI + ML</span></div>
-          <div className="about-copy" data-reveal><p className="section-kicker">About</p><h2>A small practice for big digital <em>feelings.</em></h2><p>I am an independent creative developer who cares about the space between a good idea and the way it lands. My work sits between design, code and motion.</p><div className="about-facts"><span><b>Focus</b> Creative development</span><span><b>Speciality</b> AI + ML interfaces</span><span><b>Experience</b> 6+ years</span><span><b>Available</b> Select projects</span></div></div>
+          <div className="about-copy" data-reveal><p className="section-kicker">About / The practice</p><h2>Making machine intelligence feel <em>human.</em></h2><p>I am a B.Tech AI + ML engineer and creative developer working at the edge of product thinking, interface design and motion.</p><div className="about-facts"><span><b>Focus</b> AI + ML products</span><span><b>Speciality</b> Human-centred interfaces</span><span><b>Stack</b> React / Python / GSAP</span><span><b>Available</b> Select collaborations</span></div><div className="about-status"><span className="float-dot" /> OPEN TO THE RIGHT PROBLEM <b>●</b></div></div>
         </section>
 
         <section className="timeline section-pad">
@@ -437,7 +488,7 @@ function App() {
           </div>
         </section>
 
-        <section className="testimonial section-pad" data-reveal><span className="quote-mark">“</span><blockquote>Thoughtful from the first sketch to the final frame. The work feels alive without ever getting in the way.</blockquote><p>Alex Morgan<br /><span>Creative director, Morrow House</span></p></section>
+        <section className="testimonial section-pad" data-reveal><span className="quote-mark">“</span><blockquote>Thoughtful from the first sketch to the final frame. The work feels alive without ever getting in the way.</blockquote><p>Alex Morgan<br /><span>Product lead, Neural Canvas</span></p></section>
 
         <section id="contact" className="contact section-pad">
           <p className="section-kicker">Have a good one?</p>
