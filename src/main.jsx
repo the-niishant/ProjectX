@@ -402,8 +402,8 @@ function App() {
         <section className="lab section-pad">
           <div className="lab-heading" data-reveal><p className="section-kicker">The lab</p><h2>Unfinished things<br />with <em>good bones.</em></h2></div>
           <div className="lab-grid">
-            <article className="lab-feature"><img src="https://picsum.photos/seed/lab-cyan/1000/1200" alt="Blue light on a reflective surface" loading="lazy" /><div><span>01 / Motion study</span><h3>Soft systems</h3></div></article>
-            <article className="lab-feature lab-offset"><img src="https://picsum.photos/seed/lab-orange/1000/1000" alt="Warm abstract studio light" loading="lazy" /><div><span>02 / Interface study</span><h3>Objects in orbit</h3></div></article>
+            <article className="lab-feature lab-feature-primary"><div className="lab-art lab-art-cyan"><span className="lab-art-grid" aria-hidden="true" /><span className="lab-art-orbit" aria-hidden="true" /></div><div><span>01 / Motion study</span><h3>Soft systems</h3></div></article>
+            <article className="lab-feature lab-offset"><div className="lab-art lab-art-orange"><span className="lab-art-core" aria-hidden="true" /><span className="lab-art-line" aria-hidden="true" /></div><div><span>02 / Interface study</span><h3>Objects in orbit</h3></div></article>
             <article className="lab-note"><span>Open experiments</span><strong>03</strong><p>Notes on motion, space and the web.</p><a className="text-link" href="#contact">See the lab <span>↗</span></a></article>
           </div>
         </section>
