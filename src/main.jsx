@@ -416,14 +416,15 @@ function App() {
         </section>
 
         <section id="about" className="about section-pad">
-          <div className="about-image" data-reveal><img src="https://picsum.photos/seed/portrait-studio/1000/1300" alt="Portrait in a dark studio setting" loading="lazy" /></div>
-          <div className="about-copy" data-reveal><p className="section-kicker">About</p><h2>A small practice for big digital <em>feelings.</em></h2><p>I am an independent creative developer who cares about the space between a good idea and the way it lands. My work sits between design, code and motion.</p><div className="about-facts"><span><b>Focus</b> Creative development</span><span><b>Available</b> Select projects</span><span><b>Experience</b> 6+ years</span></div></div>
+          <div className="about-image" data-reveal><img src="https://picsum.photos/seed/portrait-studio/1000/1300" alt="Portrait in a dark studio setting" loading="lazy" /><span className="about-image-caption">Creative developer / AI + ML</span></div>
+          <div className="about-copy" data-reveal><p className="section-kicker">About</p><h2>A small practice for big digital <em>feelings.</em></h2><p>I am an independent creative developer who cares about the space between a good idea and the way it lands. My work sits between design, code and motion.</p><div className="about-facts"><span><b>Focus</b> Creative development</span><span><b>Speciality</b> AI + ML interfaces</span><span><b>Experience</b> 6+ years</span><span><b>Available</b> Select projects</span></div></div>
         </section>
 
         <section className="timeline section-pad">
           <div className="timeline-heading" data-reveal><p className="section-kicker">The journey</p><h2>A practice still<br />in <em>motion.</em></h2></div>
           <div className="timeline-list">
-            {journey.map(([year, description]) => <div className="timeline-row" key={year} data-reveal><span>{year}</span><p>{description}</p></div>)}
+            <span className="timeline-spine" aria-hidden="true" />
+            {journey.map(([year, description], index) => <div className="timeline-row" key={year} data-reveal><span className="timeline-dot" aria-hidden="true" /><span className="timeline-year">{year}</span><p>{description}</p><small>0{index + 1}</small></div>)}
           </div>
         </section>
 
