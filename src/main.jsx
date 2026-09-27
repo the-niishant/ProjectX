@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { createRafLoop, MOTION, prefersReducedMotion } from './motion'
 import './styles.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -54,15 +55,15 @@ const journey = [
 
 function useReveal(scope) {
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduce = prefersReducedMotion()
     if (reduce || !scope.current) return undefined
     const ctx = gsap.context(() => {
       gsap.utils.toArray('[data-reveal]').forEach((element) => {
         gsap.fromTo(element, { y: 34, opacity: 0 }, {
           y: 0,
           opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
+          duration: MOTION.duration.reveal,
+          ease: MOTION.ease.reveal,
           scrollTrigger: { trigger: element, start: 'top 86%', once: true },
         })
       })
@@ -83,14 +84,11 @@ function App() {
   useReveal(root)
 
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduce = prefersReducedMotion()
     const lenis = new Lenis({ duration: 1.15, smoothWheel: !reduce, syncTouch: false })
-    let frame
-    const raf = (time) => {
+    const stopRaf = createRafLoop((time) => {
       lenis.raf(time)
-      frame = requestAnimationFrame(raf)
-    }
-    frame = requestAnimationFrame(raf)
+    })
     lenis.on('scroll', ScrollTrigger.update)
 
     if (!reduce) {
@@ -101,9 +99,9 @@ function App() {
           end: 'bottom bottom',
           onUpdate: (self) => document.documentElement.style.setProperty('--page-progress', self.progress),
         })
-        gsap.fromTo('.hero-line', { yPercent: 110 }, { yPercent: 0, stagger: 0.08, duration: 1.15, delay: 0.15, ease: 'power4.out' })
-        gsap.fromTo('.hero-kicker, .hero-copy, .hero-actions', { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, delay: 0.45, ease: 'power3.out' })
-        gsap.fromTo(heroMedia.current, { scale: 1.12 }, { scale: 1, duration: 1.8, delay: 0.1, ease: 'power3.out' })
+        gsap.fromTo('.hero-line', { yPercent: 110 }, { yPercent: 0, stagger: 0.08, duration: MOTION.duration.entrance, delay: 0.15, ease: MOTION.ease.cinematic })
+        gsap.fromTo('.hero-kicker, .hero-copy, .hero-actions', { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.1, duration: MOTION.duration.reveal, delay: 0.45, ease: MOTION.ease.reveal })
+        gsap.fromTo(heroMedia.current, { scale: 1.12 }, { scale: 1, duration: MOTION.duration.cinematic, delay: 0.1, ease: MOTION.ease.reveal })
         gsap.to(heroMedia.current, {
           yPercent: 10,
           scale: 1.05,
@@ -114,17 +112,17 @@ function App() {
       return () => {
         ctx.revert()
         lenis.destroy()
-        cancelAnimationFrame(frame)
+        stopRaf()
       }
     }
     return () => {
       lenis.destroy()
-      cancelAnimationFrame(frame)
+      stopRaf()
     }
   }, [heroMedia])
 
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduce = prefersReducedMotion()
     if (reduce || !storySection.current) return undefined
     const ctx = gsap.context(() => {
       const steps = gsap.utils.toArray('.story-step')
@@ -135,7 +133,7 @@ function App() {
           start: 'top top',
           end: '+=2600',
           pin: true,
-          scrub: 1,
+          scrub: MOTION.scrub.standard,
         },
       })
       steps.slice(1).forEach((step, index) => {
@@ -149,7 +147,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduce = prefersReducedMotion()
     if (reduce || !horizontal.current || !track.current) return undefined
     const ctx = gsap.context(() => {
       const distance = () => Math.max(0, track.current.scrollWidth - window.innerWidth)
@@ -161,7 +159,7 @@ function App() {
           start: 'top top',
           end: () => `+=${distance()}`,
           pin: true,
-          scrub: 1,
+          scrub: MOTION.scrub.standard,
           invalidateOnRefresh: true,
         },
       })
