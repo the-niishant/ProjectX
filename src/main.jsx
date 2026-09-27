@@ -85,11 +85,23 @@ function App() {
 
   useEffect(() => {
     const reduce = prefersReducedMotion()
-    const lenis = new Lenis({ duration: 1.15, smoothWheel: !reduce, syncTouch: false })
+    const lenis = new Lenis({ autoRaf: false, duration: 1.15, smoothWheel: !reduce, syncTouch: false })
     const stopRaf = createRafLoop((time) => {
       lenis.raf(time)
     })
     lenis.on('scroll', ScrollTrigger.update)
+    const refresh = () => ScrollTrigger.refresh()
+    const onVisibilityChange = () => {
+      if (document.hidden) lenis.stop()
+      else {
+        lenis.start()
+        refresh()
+      }
+    }
+    const resizeObserver = new ResizeObserver(refresh)
+    resizeObserver.observe(document.body)
+    document.addEventListener('visibilitychange', onVisibilityChange)
+    window.addEventListener('load', refresh, { once: true })
 
     if (!reduce) {
       const ctx = gsap.context(() => {
@@ -111,11 +123,17 @@ function App() {
       }, root)
       return () => {
         ctx.revert()
+        resizeObserver.disconnect()
+        document.removeEventListener('visibilitychange', onVisibilityChange)
+        window.removeEventListener('load', refresh)
         lenis.destroy()
         stopRaf()
       }
     }
     return () => {
+      resizeObserver.disconnect()
+      document.removeEventListener('visibilitychange', onVisibilityChange)
+      window.removeEventListener('load', refresh)
       lenis.destroy()
       stopRaf()
     }
@@ -148,7 +166,8 @@ function App() {
 
   useEffect(() => {
     const reduce = prefersReducedMotion()
-    if (reduce || !horizontal.current || !track.current) return undefined
+    const desktop = window.matchMedia('(min-width: 801px)').matches
+    if (reduce || !desktop || !horizontal.current || !track.current) return undefined
     const ctx = gsap.context(() => {
       const distance = () => Math.max(0, track.current.scrollWidth - window.innerWidth)
       gsap.to(track.current, {
@@ -161,6 +180,7 @@ function App() {
           pin: true,
           scrub: MOTION.scrub.standard,
           invalidateOnRefresh: true,
+          onUpdate: (self) => horizontal.current?.style.setProperty('--horizontal-progress', self.progress),
         },
       })
     }, horizontal)
