@@ -290,10 +290,10 @@ function App() {
           <span /><span />
         </button>
         <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation" aria-hidden={!menuOpen}>
-          <a href="#work" onClick={closeMenu}>Work</a>
-          <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
-          <a href="#about" onClick={closeMenu}>About</a>
-          <a href="#contact" onClick={closeMenu}>Start a conversation</a>
+          <a href="#work" tabIndex={menuOpen ? 0 : -1} onClick={closeMenu}>Work</a>
+          <a href="#capabilities" tabIndex={menuOpen ? 0 : -1} onClick={closeMenu}>Capabilities</a>
+          <a href="#about" tabIndex={menuOpen ? 0 : -1} onClick={closeMenu}>About</a>
+          <a href="#contact" tabIndex={menuOpen ? 0 : -1} onClick={closeMenu}>Start a conversation</a>
         </nav>
       </header>
 
