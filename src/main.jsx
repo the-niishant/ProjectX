@@ -40,10 +40,18 @@ const services = [
   ['01', 'Frontend development', 'Interfaces that stay fast, precise and easy to evolve.'],
   ['02', 'Creative development', 'Ideas translated into tactile digital experiences.'],
   ['03', 'Interaction design', 'Motion with a job to do: guide, reveal and connect.'],
-  ['04', 'Design systems', 'A clear visual language that holds together at every scale.'],
+  ['04', 'AI + ML interfaces', 'Human-centred product surfaces for intelligent systems.'],
+  ['05', 'Data experiences', 'Clear visual stories from complex information.'],
+  ['06', 'Design systems', 'A clear visual language that holds together at every scale.'],
 ]
 
 const stack = ['React', 'TypeScript', 'GSAP', 'Three.js', 'WebGL', 'CSS']
+
+const capabilitySignals = [
+  ['01', 'Model thinking', 'Turning complex AI behaviour into calm, legible flows.'],
+  ['02', 'Data fluency', 'Making patterns visible without flattening the nuance.'],
+  ['03', 'Human interfaces', 'Designing feedback that earns trust at every step.'],
+]
 
 const journey = [
   ['2022', 'Started building interfaces'],
@@ -374,12 +382,20 @@ function App() {
 
         <section id="capabilities" className="capabilities section-pad">
           <div className="capabilities-heading" data-reveal><p className="section-kicker">Capabilities</p><h2>Useful range.<br /><em>Clear focus.</em></h2></div>
-          <div className="service-list">
+          <div className="capabilities-body">
+            <div className="service-list">
             {services.map(([number, title, description], index) => (
               <button className={`service-row ${activeService === index ? 'is-active' : ''}`} key={title} type="button" onMouseEnter={() => setActiveService(index)} onFocus={() => setActiveService(index)} onClick={() => setActiveService(index)}>
                 <span className="service-number">{number}</span><span className="service-title">{title}</span><span className="service-description">{description}</span><span className="service-symbol">↗</span>
               </button>
             ))}
+            </div>
+            <div className="capability-signal" aria-live="polite">
+              <span className="signal-ring signal-ring-one" aria-hidden="true" />
+              <span className="signal-ring signal-ring-two" aria-hidden="true" />
+              <span className="signal-core" aria-hidden="true" />
+              <div className="signal-copy"><span>{capabilitySignals[activeService % capabilitySignals.length][0]} / Signal</span><strong>{capabilitySignals[activeService % capabilitySignals.length][1]}</strong><p>{capabilitySignals[activeService % capabilitySignals.length][2]}</p></div>
+            </div>
           </div>
         </section>
 
