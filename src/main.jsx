@@ -198,6 +198,18 @@ function App() {
           onUpdate: (self) => horizontal.current?.style.setProperty('--horizontal-progress', self.progress),
         },
       })
+      gsap.utils.toArray('.horizontal-card img').forEach((image, index) => {
+        gsap.to(image, {
+          xPercent: index % 2 === 0 ? -5 : 5,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: horizontal.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: MOTION.scrub.standard,
+          },
+        })
+      })
     }, horizontal)
     return () => ctx.revert()
   }, [])
@@ -353,7 +365,7 @@ function App() {
             {projects.map((project, index) => (
               <figure className={`horizontal-card card-${index + 1}`} key={`horizontal-${project.title}`}>
                 <img src={project.image} alt={`${project.title} detail`} loading="lazy" />
-                <figcaption><span>{project.title}</span><span>{project.category}</span></figcaption>
+                <figcaption><span>{project.title}</span><span>{project.category}</span><b>0{index + 1}</b></figcaption>
               </figure>
             ))}
           </div>
