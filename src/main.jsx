@@ -1,0 +1,292 @@
+import { useEffect, useRef, useState } from 'react'
+import { createRoot } from 'react-dom/client'
+import Lenis from 'lenis'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import './styles.css'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const projects = [
+  {
+    number: '01',
+    title: 'Morrow House',
+    category: 'Digital identity / Commerce',
+    year: '2026',
+    description: 'A quiet commerce experience for a design-led furniture studio.',
+    image: 'https://picsum.photos/seed/morrow-house/1400/1050',
+    featured: true,
+  },
+  {
+    number: '02',
+    title: 'Field Notes',
+    category: 'Editorial system / WebGL',
+    year: '2025',
+    description: 'A living archive for photographers working at the edge of place.',
+    image: 'https://picsum.photos/seed/field-notes/1400/1050',
+  },
+  {
+    number: '03',
+    title: 'Aster Studio',
+    category: 'Portfolio / Motion',
+    year: '2025',
+    description: 'An elastic portfolio system built for a small creative practice.',
+    image: 'https://picsum.photos/seed/aster-studio/1400/1050',
+  },
+]
+
+const services = [
+  ['01', 'Frontend development', 'Interfaces that stay fast, precise and easy to evolve.'],
+  ['02', 'Creative development', 'Ideas translated into tactile digital experiences.'],
+  ['03', 'Interaction design', 'Motion with a job to do: guide, reveal and connect.'],
+  ['04', 'Design systems', 'A clear visual language that holds together at every scale.'],
+]
+
+const stack = ['React', 'TypeScript', 'GSAP', 'Three.js', 'WebGL', 'CSS']
+
+function useReveal(scope) {
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce || !scope.current) return undefined
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('[data-reveal]').forEach((element) => {
+        gsap.fromTo(element, { y: 34, opacity: 0 }, {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: element, start: 'top 86%', once: true },
+        })
+      })
+    }, scope)
+    return () => ctx.revert()
+  }, [scope])
+}
+
+function App() {
+  const root = useRef(null)
+  const heroMedia = useRef(null)
+  const horizontal = useRef(null)
+  const track = useRef(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [activeService, setActiveService] = useState(0)
+
+  useReveal(root)
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const lenis = new Lenis({ duration: 1.15, smoothWheel: !reduce, syncTouch: false })
+    let frame
+    const raf = (time) => {
+      lenis.raf(time)
+      frame = requestAnimationFrame(raf)
+    }
+    frame = requestAnimationFrame(raf)
+    lenis.on('scroll', ScrollTrigger.update)
+
+    if (!reduce) {
+      const ctx = gsap.context(() => {
+        gsap.fromTo('.hero-line', { yPercent: 110 }, { yPercent: 0, stagger: 0.08, duration: 1.15, delay: 0.15, ease: 'power4.out' })
+        gsap.fromTo('.hero-kicker, .hero-copy, .hero-actions', { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, delay: 0.45, ease: 'power3.out' })
+        gsap.fromTo(heroMedia.current, { scale: 1.12 }, { scale: 1, duration: 1.8, delay: 0.1, ease: 'power3.out' })
+        gsap.to(heroMedia.current, {
+          yPercent: 10,
+          scale: 1.05,
+          ease: 'none',
+          scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+        })
+      }, root)
+      return () => {
+        ctx.revert()
+        lenis.destroy()
+        cancelAnimationFrame(frame)
+      }
+    }
+    return () => {
+      lenis.destroy()
+      cancelAnimationFrame(frame)
+    }
+  }, [heroMedia])
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce || !horizontal.current || !track.current) return undefined
+    const ctx = gsap.context(() => {
+      const distance = () => Math.max(0, track.current.scrollWidth - window.innerWidth)
+      gsap.to(track.current, {
+        x: () => -distance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: horizontal.current,
+          start: 'top top',
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      })
+    }, horizontal)
+    return () => ctx.revert()
+  }, [])
+
+  useEffect(() => {
+    const onPointer = (event) => {
+      document.documentElement.style.setProperty('--cursor-x', `${event.clientX}px`)
+      document.documentElement.style.setProperty('--cursor-y', `${event.clientY}px`)
+    }
+    window.addEventListener('pointermove', onPointer)
+    return () => window.removeEventListener('pointermove', onPointer)
+  }, [])
+
+  const closeMenu = () => setMenuOpen(false)
+
+  return (
+    <div ref={root} className="site-shell">
+      <div className="cursor-dot" aria-hidden="true" />
+      <div className="grain" aria-hidden="true" />
+      <header className={`site-header ${menuOpen ? 'menu-open' : ''}`}>
+        <a className="wordmark" href="#top" onClick={closeMenu}>PX<span>.</span></a>
+        <nav className="desktop-nav" aria-label="Primary navigation">
+          <a href="#work">Work</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#about">About</a>
+        </nav>
+        <a className="header-contact" href="#contact">Start a conversation <span>↗</span></a>
+        <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>
+          <span /><span />
+        </button>
+        <nav className="mobile-nav" aria-label="Mobile navigation">
+          <a href="#work" onClick={closeMenu}>Work</a>
+          <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
+          <a href="#about" onClick={closeMenu}>About</a>
+          <a href="#contact" onClick={closeMenu}>Start a conversation</a>
+        </nav>
+      </header>
+
+      <main id="top">
+        <section className="hero" aria-labelledby="hero-title">
+          <div ref={heroMedia} className="hero-media" role="img" aria-label="Abstract light passing across a dark architectural surface" />
+          <div className="hero-scrim" />
+          <div className="hero-content">
+            <p className="hero-kicker">Creative developer / Independent practice</p>
+            <h1 id="hero-title">
+              <span className="hero-line-wrap"><span className="hero-line">Digital work</span></span>
+              <span className="hero-line-wrap"><span className="hero-line hero-italic">with a pulse.</span></span>
+            </h1>
+            <p className="hero-copy">I design and build expressive interfaces for people shaping what comes next.</p>
+            <div className="hero-actions">
+              <a className="button button-solid" href="#work">View selected work <span>↗</span></a>
+              <a className="text-link" href="#about">More about me <span>↗</span></a>
+            </div>
+          </div>
+          <div className="hero-foot"><span>Based anywhere, working everywhere</span><span className="scroll-mark">Scroll <b>↓</b></span></div>
+        </section>
+
+        <section className="manifesto section-pad" data-reveal>
+          <p className="section-kicker">A considered approach</p>
+          <h2>I make space for ideas to become <em>felt.</em></h2>
+          <p className="manifesto-copy">The best digital experiences have a point of view. They are clear enough to use, and surprising enough to remember.</p>
+        </section>
+
+        <section id="work" className="work section-pad">
+          <div className="section-heading" data-reveal>
+            <p className="section-kicker">Selected work</p>
+            <h2>Built for the long look.</h2>
+          </div>
+          <div className="project-list">
+            {projects.map((project, index) => (
+              <article className={`project project-${index + 1}`} key={project.title} data-reveal>
+                <div className="project-image-wrap">
+                  <img src={project.image} alt={`${project.title} project artwork`} loading={index === 0 ? 'eager' : 'lazy'} />
+                  <a className="image-link" href="#contact" aria-label={`Discuss ${project.title}`}>View <span>↗</span></a>
+                </div>
+                <div className="project-info">
+                  <div className="project-number">{project.number}</div>
+                  <div className="project-copy">
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <div className="project-meta"><span>{project.category}</span><span>{project.year}</span></div>
+                  </div>
+                  <a className="project-arrow" href="#contact" aria-label={`View ${project.title}`}>↗</a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="featured-story">
+          <div className="story-visual" data-reveal><img src="https://picsum.photos/seed/featured-architecture/1800/1200" alt="Light and shadow on a sculptural building" loading="lazy" /></div>
+          <div className="story-content">
+            <p className="section-kicker">A closer look</p>
+            <h2>Designing for the moment before the click.</h2>
+            <div className="story-copy">
+              <p>For Morrow House, the brief was simple: make a catalogue feel like a room worth entering.</p>
+              <a className="text-link" href="#contact">Read the approach <span>↗</span></a>
+            </div>
+          </div>
+        </section>
+
+        <section ref={horizontal} className="horizontal-work" aria-label="More project work">
+          <div ref={track} className="horizontal-track">
+            <div className="horizontal-intro"><p className="section-kicker">The work</p><h2>Small gestures.<br /><em>Real weight.</em></h2></div>
+            {projects.map((project, index) => (
+              <figure className={`horizontal-card card-${index + 1}`} key={`horizontal-${project.title}`}>
+                <img src={project.image} alt={`${project.title} detail`} loading="lazy" />
+                <figcaption><span>{project.title}</span><span>{project.category}</span></figcaption>
+              </figure>
+            ))}
+          </div>
+          <div className="horizontal-progress" aria-hidden="true"><span /></div>
+        </section>
+
+        <section id="capabilities" className="capabilities section-pad">
+          <div className="capabilities-heading" data-reveal><p className="section-kicker">Capabilities</p><h2>Useful range.<br /><em>Clear focus.</em></h2></div>
+          <div className="service-list">
+            {services.map(([number, title, description], index) => (
+              <button className={`service-row ${activeService === index ? 'is-active' : ''}`} key={title} type="button" onMouseEnter={() => setActiveService(index)} onFocus={() => setActiveService(index)} onClick={() => setActiveService(index)}>
+                <span className="service-number">{number}</span><span className="service-title">{title}</span><span className="service-description">{description}</span><span className="service-symbol">↗</span>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        <section className="lab section-pad">
+          <div className="lab-heading" data-reveal><p className="section-kicker">The lab</p><h2>Unfinished things<br />with <em>good bones.</em></h2></div>
+          <div className="lab-grid">
+            <article className="lab-feature"><img src="https://picsum.photos/seed/lab-cyan/1000/1200" alt="Blue light on a reflective surface" loading="lazy" /><div><span>01 / Motion study</span><h3>Soft systems</h3></div></article>
+            <article className="lab-feature lab-offset"><img src="https://picsum.photos/seed/lab-orange/1000/1000" alt="Warm abstract studio light" loading="lazy" /><div><span>02 / Interface study</span><h3>Objects in orbit</h3></div></article>
+            <article className="lab-note"><span>Open experiments</span><strong>03</strong><p>Notes on motion, space and the web.</p><a className="text-link" href="#contact">See the lab <span>↗</span></a></article>
+          </div>
+        </section>
+
+        <section className="stack-section section-pad">
+          <div data-reveal><p className="section-kicker">Working stack</p><h2>Tools are only useful<br />when the idea is <em>clear.</em></h2></div>
+          <div className="stack-list" role="list">
+            {stack.map((item, index) => <span role="listitem" key={item}><b>0{index + 1}</b>{item}</span>)}
+          </div>
+        </section>
+
+        <section id="about" className="about section-pad">
+          <div className="about-image" data-reveal><img src="https://picsum.photos/seed/portrait-studio/1000/1300" alt="Portrait in a dark studio setting" loading="lazy" /></div>
+          <div className="about-copy" data-reveal><p className="section-kicker">About</p><h2>A small practice for big digital <em>feelings.</em></h2><p>I am an independent creative developer who cares about the space between a good idea and the way it lands. My work sits between design, code and motion.</p><div className="about-facts"><span><b>Focus</b> Creative development</span><span><b>Available</b> Select projects</span><span><b>Experience</b> 6+ years</span></div></div>
+        </section>
+
+        <section className="testimonial section-pad" data-reveal><span className="quote-mark">“</span><blockquote>Thoughtful from the first sketch to the final frame. The work feels alive without ever getting in the way.</blockquote><p>Alex Morgan<br /><span>Creative director, Morrow House</span></p></section>
+
+        <section id="contact" className="contact section-pad">
+          <p className="section-kicker">Have a good one?</p>
+          <h2>Let’s make<br /><em>something memorable.</em></h2>
+          <a className="contact-link" href="mailto:hello@portfoliox.studio">hello@portfoliox.studio <span>↗</span></a>
+        </section>
+      </main>
+
+      <footer className="footer">
+        <div className="footer-top"><a className="wordmark" href="#top">PX<span>.</span></a><span>Available for select projects</span><a href="mailto:hello@portfoliox.studio">Email ↗</a></div>
+        <div className="footer-name">PORTFOLIOX</div>
+        <div className="footer-bottom"><span>© 2026 PortfolioX</span><span>Built with curiosity</span><a href="#top">Back to top ↑</a></div>
+      </footer>
+    </div>
+  )
+}
+
+createRoot(document.getElementById('root')).render(<App />)
