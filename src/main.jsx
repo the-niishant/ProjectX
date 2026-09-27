@@ -53,6 +53,13 @@ const journey = [
   ['2026', 'Building ambitious digital experiences'],
 ]
 
+const storyFrames = [
+  ['Overview', 'https://picsum.photos/seed/morrow-overview/1600/1200'],
+  ['Challenge', 'https://picsum.photos/seed/morrow-challenge/1600/1200'],
+  ['Approach', 'https://picsum.photos/seed/morrow-approach/1600/1200'],
+  ['Result', 'https://picsum.photos/seed/morrow-result/1600/1200'],
+]
+
 function useReveal(scope) {
   useEffect(() => {
     const reduce = prefersReducedMotion()
@@ -144,7 +151,11 @@ function App() {
     if (reduce || !storySection.current) return undefined
     const ctx = gsap.context(() => {
       const steps = gsap.utils.toArray('.story-step')
+      const frames = gsap.utils.toArray('.story-image-frame')
+      const indexes = gsap.utils.toArray('.story-index-item')
       gsap.set(steps.slice(1), { autoAlpha: 0, x: 40 })
+      gsap.set(frames.slice(1), { autoAlpha: 0, scale: 1.06 })
+      gsap.set(indexes.slice(1), { opacity: 0.35 })
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: storySection.current,
@@ -158,6 +169,10 @@ function App() {
         timeline
           .to(steps[index], { autoAlpha: 0, x: -40, duration: 0.45 })
           .to(step, { autoAlpha: 1, x: 0, duration: 0.55 }, '<')
+          .to(frames[index], { autoAlpha: 0, scale: 0.98, duration: 0.45 }, '<')
+          .to(frames[index + 1], { autoAlpha: 1, scale: 1, duration: 0.55 }, '<')
+          .to(indexes[index], { opacity: 0.35, duration: 0.35 }, '<')
+          .to(indexes[index + 1], { opacity: 1, duration: 0.55 }, '<')
           .to('.story-progress-fill', { scaleX: (index + 1) / (steps.length - 1), duration: 0.55 }, '<')
       })
     }, storySection)
@@ -313,7 +328,10 @@ function App() {
         </section>
 
         <section ref={storySection} className="featured-story">
-          <div className="story-visual" data-reveal><img src="https://picsum.photos/seed/featured-architecture/1800/1200" alt="Light and shadow on a sculptural building" loading="lazy" /></div>
+          <div className="story-visual" data-reveal>
+            {storyFrames.map(([label, image], index) => <img className="story-image-frame" key={label} src={image} alt={`${label} view of the Morrow House project`} loading={index === 0 ? 'eager' : 'lazy'} />)}
+            <span className="story-visual-label">Morrow House / Case study</span>
+          </div>
           <div className="story-content">
             <p className="section-kicker">A closer look</p>
             <div className="story-steps">
@@ -321,6 +339,9 @@ function App() {
               <article className="story-step"><span>Challenge</span><h2>Make restraint feel alive.</h2><p>We shaped a slower interface around the materiality of the collection, without hiding the path to purchase.</p></article>
               <article className="story-step"><span>Approach</span><h2>Every detail earns its place.</h2><p>Editorial type, quiet transitions and a flexible system gave the studio room to keep telling its story.</p></article>
               <article className="story-step"><span>Result</span><h2>A catalogue that feels like a room.</h2><p>The final experience makes browsing feel tactile, calm and unmistakably theirs.</p></article>
+            </div>
+            <div className="story-index" aria-label="Case study progress">
+              {storyFrames.map(([label]) => <span className="story-index-item" key={label}>{label}</span>)}
             </div>
             <div className="story-progress" aria-hidden="true"><span className="story-progress-fill" /></div>
           </div>

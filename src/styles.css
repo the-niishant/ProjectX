@@ -114,7 +114,10 @@ h2 { font-size: clamp(48px, 6vw, 88px); font-weight: 500; letter-spacing: -.075e
 
 .featured-story { min-height: 100dvh; display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 8vw; padding: 8vw; background: #121212; }
 .story-visual { overflow: hidden; border-radius: var(--radius-card); box-shadow: var(--surface-shadow); }
-.story-visual img { aspect-ratio: .88; filter: saturate(.45); }
+.story-visual { position: relative; aspect-ratio: .88; background: #181818; }
+.story-visual img { position: absolute; inset: 0; height: 100%; aspect-ratio: .88; filter: saturate(.45); transform: scale(1); visibility: hidden; }
+.story-visual img:first-child { visibility: visible; }
+.story-visual-label { position: absolute; right: 18px; bottom: 16px; color: rgba(245, 242, 236, .72); font: 9px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .1em; }
 .story-content { min-width: 0; }
 .story-steps { position: relative; min-height: 330px; }
 .story-step { position: absolute; inset: 0; visibility: hidden; }
@@ -122,6 +125,8 @@ h2 { font-size: clamp(48px, 6vw, 88px); font-weight: 500; letter-spacing: -.075e
 .story-step > span { color: var(--accent); font: 10px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .2em; }
 .story-step h2 { max-width: 600px; margin: 19px 0 30px; }
 .story-step p { max-width: 310px; margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.story-index { display: flex; gap: 18px; margin-top: 28px; color: var(--paper); font: 9px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .12em; }
+.story-index-item { transition: opacity var(--duration-standard) var(--ease-smooth); }
 .story-progress { width: min(100%, 310px); height: 1px; margin-top: 35px; background: var(--line); }
 .story-progress-fill { display: block; width: 100%; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
 
@@ -234,10 +239,11 @@ blockquote { max-width: 930px; margin: 38px auto; font-size: clamp(30px, 4vw, 58
   .project-meta { display: block; line-height: 1.8; }
   .project-meta span { display: block; }
   .featured-story { display: block; padding: 24vw 6vw; }
-  .story-visual img { aspect-ratio: .82; }
+  .story-visual { aspect-ratio: .82; }
   .story-content { padding-top: 65px; }
   .story-steps { min-height: 360px; }
   .story-step h2 { font-size: 51px; }
+  .story-index { gap: 12px; flex-wrap: wrap; }
   .timeline { display: block; }
   .timeline-heading { margin-bottom: 58px; }
   .timeline-row { grid-template-columns: 65px 1fr; }
@@ -276,6 +282,9 @@ blockquote { max-width: 930px; margin: 38px auto; font-size: clamp(30px, 4vw, 58
   .project-image-wrap, .project-image-wrap:hover, .project-image-wrap img, .project:hover img { transform: none !important; }
   .hero-orbit-one, .hero-orbit-two, .hero-profile-card { animation: none; }
   .story-steps { min-height: auto; }
+  .story-image-frame { position: relative !important; inset: auto !important; display: none; }
+  .story-image-frame:first-child { display: block; }
+  .story-index-item { opacity: 1 !important; }
   .story-step, .story-step:first-child { position: relative; inset: auto; visibility: visible; opacity: 1; transform: none; margin-bottom: 42px; }
   .story-progress { display: none; }
 }
