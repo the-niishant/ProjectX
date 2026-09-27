@@ -394,7 +394,7 @@ function App() {
           <div className="capabilities-body">
             <div className="service-list">
             {services.map(([number, title, description], index) => (
-              <button className={`service-row ${activeService === index ? 'is-active' : ''}`} key={title} type="button" onMouseEnter={() => setActiveService(index)} onFocus={() => setActiveService(index)} onClick={() => setActiveService(index)}>
+              <button className={`service-row ${activeService === index ? 'is-active' : ''}`} key={title} type="button" aria-pressed={activeService === index} onMouseEnter={() => setActiveService(index)} onFocus={() => setActiveService(index)} onClick={() => setActiveService(index)}>
                 <span className="service-number">{number}</span><span className="service-title">{title}</span><span className="service-description">{description}</span><span className="service-symbol">↗</span>
               </button>
             ))}
