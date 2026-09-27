@@ -44,6 +44,14 @@ const services = [
 
 const stack = ['React', 'TypeScript', 'GSAP', 'Three.js', 'WebGL', 'CSS']
 
+const journey = [
+  ['2022', 'Started building interfaces'],
+  ['2023', 'Focused on frontend systems'],
+  ['2024', 'Interactive and motion projects'],
+  ['2025', 'Creative development'],
+  ['2026', 'Building ambitious digital experiences'],
+]
+
 function useReveal(scope) {
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -68,6 +76,7 @@ function App() {
   const heroMedia = useRef(null)
   const horizontal = useRef(null)
   const track = useRef(null)
+  const storySection = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeService, setActiveService] = useState(0)
 
@@ -86,6 +95,12 @@ function App() {
 
     if (!reduce) {
       const ctx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          onUpdate: (self) => document.documentElement.style.setProperty('--page-progress', self.progress),
+        })
         gsap.fromTo('.hero-line', { yPercent: 110 }, { yPercent: 0, stagger: 0.08, duration: 1.15, delay: 0.15, ease: 'power4.out' })
         gsap.fromTo('.hero-kicker, .hero-copy, .hero-actions', { opacity: 0, y: 18 }, { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, delay: 0.45, ease: 'power3.out' })
         gsap.fromTo(heroMedia.current, { scale: 1.12 }, { scale: 1, duration: 1.8, delay: 0.1, ease: 'power3.out' })
@@ -107,6 +122,31 @@ function App() {
       cancelAnimationFrame(frame)
     }
   }, [heroMedia])
+
+  useEffect(() => {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce || !storySection.current) return undefined
+    const ctx = gsap.context(() => {
+      const steps = gsap.utils.toArray('.story-step')
+      gsap.set(steps.slice(1), { autoAlpha: 0, x: 40 })
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: storySection.current,
+          start: 'top top',
+          end: '+=2600',
+          pin: true,
+          scrub: 1,
+        },
+      })
+      steps.slice(1).forEach((step, index) => {
+        timeline
+          .to(steps[index], { autoAlpha: 0, x: -40, duration: 0.45 })
+          .to(step, { autoAlpha: 1, x: 0, duration: 0.55 }, '<')
+          .to('.story-progress-fill', { scaleX: (index + 1) / (steps.length - 1), duration: 0.55 }, '<')
+      })
+    }, storySection)
+    return () => ctx.revert()
+  }, [])
 
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -142,6 +182,7 @@ function App() {
 
   return (
     <div ref={root} className="site-shell">
+      <div className="page-progress" aria-hidden="true" />
       <div className="cursor-dot" aria-hidden="true" />
       <div className="grain" aria-hidden="true" />
       <header className={`site-header ${menuOpen ? 'menu-open' : ''}`}>
@@ -214,15 +255,17 @@ function App() {
           </div>
         </section>
 
-        <section className="featured-story">
+        <section ref={storySection} className="featured-story">
           <div className="story-visual" data-reveal><img src="https://picsum.photos/seed/featured-architecture/1800/1200" alt="Light and shadow on a sculptural building" loading="lazy" /></div>
           <div className="story-content">
             <p className="section-kicker">A closer look</p>
-            <h2>Designing for the moment before the click.</h2>
-            <div className="story-copy">
-              <p>For Morrow House, the brief was simple: make a catalogue feel like a room worth entering.</p>
-              <a className="text-link" href="#contact">Read the approach <span>↗</span></a>
+            <div className="story-steps">
+              <article className="story-step"><span>Overview</span><h2>Designing for the moment before the click.</h2><p>For Morrow House, the brief was simple: make a catalogue feel like a room worth entering.</p></article>
+              <article className="story-step"><span>Challenge</span><h2>Make restraint feel alive.</h2><p>We shaped a slower interface around the materiality of the collection, without hiding the path to purchase.</p></article>
+              <article className="story-step"><span>Approach</span><h2>Every detail earns its place.</h2><p>Editorial type, quiet transitions and a flexible system gave the studio room to keep telling its story.</p></article>
+              <article className="story-step"><span>Result</span><h2>A catalogue that feels like a room.</h2><p>The final experience makes browsing feel tactile, calm and unmistakably theirs.</p></article>
             </div>
+            <div className="story-progress" aria-hidden="true"><span className="story-progress-fill" /></div>
           </div>
         </section>
 
@@ -271,6 +314,13 @@ function App() {
           <div className="about-copy" data-reveal><p className="section-kicker">About</p><h2>A small practice for big digital <em>feelings.</em></h2><p>I am an independent creative developer who cares about the space between a good idea and the way it lands. My work sits between design, code and motion.</p><div className="about-facts"><span><b>Focus</b> Creative development</span><span><b>Available</b> Select projects</span><span><b>Experience</b> 6+ years</span></div></div>
         </section>
 
+        <section className="timeline section-pad">
+          <div className="timeline-heading" data-reveal><p className="section-kicker">The journey</p><h2>A practice still<br />in <em>motion.</em></h2></div>
+          <div className="timeline-list">
+            {journey.map(([year, description]) => <div className="timeline-row" key={year} data-reveal><span>{year}</span><p>{description}</p></div>)}
+          </div>
+        </section>
+
         <section className="testimonial section-pad" data-reveal><span className="quote-mark">“</span><blockquote>Thoughtful from the first sketch to the final frame. The work feels alive without ever getting in the way.</blockquote><p>Alex Morgan<br /><span>Creative director, Morrow House</span></p></section>
 
         <section id="contact" className="contact section-pad">
@@ -281,7 +331,7 @@ function App() {
       </main>
 
       <footer className="footer">
-        <div className="footer-top"><a className="wordmark" href="#top">PX<span>.</span></a><span>Available for select projects</span><a href="mailto:hello@portfoliox.studio">Email ↗</a></div>
+        <div className="footer-top"><a className="wordmark" href="#top">PX<span>.</span></a><span>Available for select projects</span><span className="footer-socials"><a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://github.com" target="_blank" rel="noreferrer">GitHub ↗</a><a href="mailto:hello@portfoliox.studio">Email ↗</a></span></div>
         <div className="footer-name">PORTFOLIOX</div>
         <div className="footer-bottom"><span>© 2026 PortfolioX</span><span>Built with curiosity</span><a href="#top">Back to top ↑</a></div>
       </footer>
