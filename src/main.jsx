@@ -232,6 +232,15 @@ function App() {
   }, [])
 
   useEffect(() => {
+    if (!menuOpen) return undefined
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [menuOpen])
+
+  useEffect(() => {
     const reduce = prefersReducedMotion()
     const finePointer = window.matchMedia('(pointer: fine)').matches
     if (reduce || !finePointer) return undefined
@@ -277,10 +286,10 @@ function App() {
           <a href="#about">About</a>
         </nav>
         <a className="header-contact" href="#contact">Start a conversation <span>↗</span></a>
-        <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>
+        <button className="menu-toggle" type="button" aria-expanded={menuOpen} aria-controls="mobile-navigation" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen(!menuOpen)}>
           <span /><span />
         </button>
-        <nav className="mobile-nav" aria-label="Mobile navigation">
+        <nav id="mobile-navigation" className="mobile-nav" aria-label="Mobile navigation" aria-hidden={!menuOpen}>
           <a href="#work" onClick={closeMenu}>Work</a>
           <a href="#capabilities" onClick={closeMenu}>Capabilities</a>
           <a href="#about" onClick={closeMenu}>About</a>

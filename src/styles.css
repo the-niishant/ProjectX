@@ -48,6 +48,9 @@ body:has(a:hover) .cursor-dot, body:has(button:hover) .cursor-dot { width: 34px;
 .desktop-nav a, .header-contact, .footer-top, .footer-bottom { font: 10px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .12em; }
 .desktop-nav a, .header-contact { color: rgba(245,242,236,.68); transition: color var(--duration-micro) var(--ease-smooth); }
 .desktop-nav a:hover, .header-contact:hover { color: var(--paper); }
+.desktop-nav a { position: relative; }
+.desktop-nav a::after { content: ''; position: absolute; right: 0; bottom: -9px; left: 0; height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: right; transition: transform var(--duration-standard) var(--ease-cinematic); }
+.desktop-nav a:hover::after, .desktop-nav a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 .header-contact span, .text-link span, .button span, .contact-link span { color: var(--accent); margin-left: 5px; }
 .menu-toggle, .mobile-nav { display: none; }
 
@@ -78,6 +81,8 @@ body:has(a:hover) .cursor-dot, body:has(button:hover) .cursor-dot { width: 34px;
 .button:hover { transform: translateY(-3px); }
 .button:active { transform: translateY(-1px) scale(.98); }
 .button-solid { color: var(--ink); background: var(--paper); }
+.button span, .contact-link span { display: inline-block; transition: transform var(--duration-micro) var(--ease-smooth); }
+.button:hover span, .button:focus-visible span, .contact-link:hover span, .contact-link:focus-visible span { transform: translate(3px, -3px); }
 .text-link { position: relative; font: 10px 'DM Mono', monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--paper); }
 .text-link::after { content: ''; position: absolute; right: 0; bottom: -7px; left: 0; height: 1px; background: var(--accent); transform: scaleX(.28); transform-origin: left; transition: transform var(--duration-standard) var(--ease-cinematic); }
 .text-link:hover::after, .text-link:focus-visible::after { transform: scaleX(1); }
@@ -101,7 +106,7 @@ h2 { font-size: clamp(48px, 6vw, 88px); font-weight: 500; letter-spacing: -.075e
 .project-image-wrap img { aspect-ratio: 1.5; transition: transform var(--duration-cinematic) var(--ease-cinematic), filter var(--duration-standard) var(--ease-smooth); filter: saturate(.58); }
 .project:hover img { transform: scale(1.035); filter: saturate(.85); }
 .image-link { position: absolute; right: 24px; bottom: 24px; padding: 12px 14px; border-radius: var(--radius-control); background: var(--paper); color: var(--ink); font: 10px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .1em; opacity: 0; transform: translateY(10px); transition: opacity var(--duration-standard) var(--ease-smooth), transform var(--duration-standard) var(--ease-smooth); }
-.project:hover .image-link { opacity: 1; transform: translateY(0); }
+.project:hover .image-link, .image-link:focus-visible { opacity: 1; transform: translateY(0); }
 .project-info { display: grid; grid-template-columns: 70px 1fr auto; gap: 24px; padding-top: 22px; }
 .project-number, .project-meta, .lab-feature span, .lab-note span, .about-facts, .stack-list, .footer-top, .footer-bottom { font: 10px 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
 .project-copy h3 { margin: 0 0 9px; font-size: clamp(26px, 3vw, 44px); font-weight: 500; letter-spacing: -.055em; }
@@ -244,6 +249,8 @@ blockquote { max-width: 930px; margin: 38px auto; font-size: clamp(30px, 4vw, 58
   .menu-open .menu-toggle span:last-child { transform: translateY(-3px) rotate(-45deg); }
   .mobile-nav { position: absolute; display: grid; gap: 18px; top: 68px; left: 0; right: 0; padding: 28px 6vw 35px; background: rgba(10,10,10,.97); transform: translateY(-150%); transition: transform .4s cubic-bezier(.16,1,.3,1); }
   .menu-open .mobile-nav { transform: translateY(0); }
+  .mobile-nav[aria-hidden="true"] { pointer-events: none; }
+  .mobile-nav[aria-hidden="false"] { pointer-events: auto; }
   .mobile-nav a { font-size: 28px; letter-spacing: -.06em; }
   .hero { min-height: 100dvh; padding: 0 6vw 90px; }
   .hero-orbit { right: -14vw; top: 18%; width: 68vw; opacity: .7; }
