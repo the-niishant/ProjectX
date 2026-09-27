@@ -447,7 +447,7 @@ function App() {
       </main>
 
       <footer className="footer">
-        <div className="footer-top"><a className="wordmark" href="#top">PX<span>.</span></a><span>Available for select projects</span><span className="footer-socials"><a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="https://github.com" target="_blank" rel="noreferrer">GitHub ↗</a><a href="mailto:hello@portfoliox.studio">Email ↗</a></span></div>
+        <div className="footer-top"><a className="wordmark" href="#top">PX<span>.</span></a><span>Available for select projects</span><span className="footer-socials"><a href="https://github.com/the-niishant/ProjectX" target="_blank" rel="noreferrer">GitHub ↗</a><a href="mailto:hello@portfoliox.studio">Email ↗</a></span></div>
         <div className="footer-name">PORTFOLIOX</div>
         <div className="footer-bottom"><span>© 2026 PortfolioX</span><span>Built with curiosity</span><a href="#top">Back to top ↑</a></div>
       </footer>
